@@ -1,4 +1,5 @@
 venv
-Tourism/Tourism/__pycache__
+Tourism/*/__pycache__
+Tourism/*/migrations/__pycache__
 Tourism/db.sqlite3
 Tourism/.env
