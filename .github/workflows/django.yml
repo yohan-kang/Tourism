@@ -15,7 +15,6 @@ jobs:
       matrix:
         python-version: [3.9]
     env:
-      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       DEBUG: 0
       POSTGRES_DB: tourism
       POSTGRES_PASSWORD: postgres
@@ -45,5 +44,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+       export DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"
         cd ./Tourism
         python manage.py test
