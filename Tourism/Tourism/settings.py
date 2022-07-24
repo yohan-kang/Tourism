@@ -168,6 +168,7 @@ AUTHENTICATION_BACKENDS = [
 
 ACCOUNT_SIGNUP_REDIRECT_URL ="list"
 LOGIN_REDIRECT_URL ="list"
+ACCOUNT_LOGOUT_ON_GET =True
 
 # Email settings
 EMAIL_BACKEND ="django.core.mail.backends.console.EmailBackend"
