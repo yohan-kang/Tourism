@@ -15,6 +15,7 @@ jobs:
       matrix:
         python-version: [3.9]
     env:
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       DEBUG: 0
       POSTGRES_DB: tourism
       POSTGRES_PASSWORD: postgres
