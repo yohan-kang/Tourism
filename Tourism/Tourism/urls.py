@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path,include
 from accounts import views 
 from django.views.generic import TemplateView
+from accounts.views import CustomPasswordChangeView
+
 urlpatterns = [
     # admin
     path('admin/', admin.site.urls),
@@ -28,6 +30,12 @@ urlpatterns = [
       TemplateView.as_view(template_name='Tourism/email_confirmation_done.html'),
       name="account_email_confirmation_done",
     ),
+    path(
+        'password/change/',
+        CustomPasswordChangeView.as_view(),
+        name="account_password_change"
+    ),
     path("", include('allauth.urls')),
+    # list page
     path('accommodation/', views.list),
 ]
