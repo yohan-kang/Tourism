@@ -1,0 +1,39 @@
+{% extends "Tourism_base/base.html" %}
+
+{% load static %}
+
+{% block title %}join membership | Coplate{% endblock title %}
+
+{% block content %}
+<div class="account-background">
+  <main class="account">
+    <div class="title">
+      <a href="#">
+        <img class="logo" src="{% static 'Tourism/assets/coplate-logo.svg' %}" alt="Coplate Logo">
+      </a>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <div>
+        <input type="email" name="email" placeholder="E-mail" autocomplete="email" class="cp-input" required id="id_email">
+      </div>
+      <div>
+        <input type="text" name="nickname" maxlength="15" placeholder="Nickname" class="error cp-input" required id="id_nickname">
+        <div class="error-message">This nickname is already in use.</div>
+      </div>
+      <div>
+        <input type="password" name="password1" placeholder="Password" autocomplete="new-password" class="cp-input" required id="id_password1">
+      </div>
+      <div>
+        <input type="password" name="password2" placeholder="Confirm password" class="cp-input" required id="id_password2">
+      </div>
+      <button class="cp-button" type="submit">join membership</button>
+    </form>
+
+    <div class="info">
+      Are you already a member?<a class="link" href="#">Login</a>
+    </div>
+  </main>
+</div>
+{% endblock content %}
