@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'Tourism.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 DB_USERNAME = os.environ.get("POSTGRES_USERNAME")
@@ -100,9 +100,7 @@ DB_IS_AVAILABLE = all([
     DB_PORT
 ])
 
-POSTGRES_READY = str(os.environ.get("POSTGRES_READY")) == '1'
-
-if DB_IS_AVAILABLE and POSTGRES_READY:
+if DB_IS_AVAILABLE:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
