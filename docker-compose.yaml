@@ -1,21 +1,21 @@
 version: "3.9"
 services:
-  # web:
-  #   depends_on:
-  #     - postgres
-  #   build:
-  #     context: ./Tourism
-  #     dockerfile: Dockerfile
-  #   image: tourism:v1
-  #   environment:
-  #     - PORT=8020
-  #   env_file:
-  #     - Tourism/.env
-  #   ports:
-  #     - "8000:8020"
-  #   command: sh -c "chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"
-    # volumes:
-    #   - staticfiles:/app/staticfiles/
+  web:
+    depends_on:
+      - postgres
+    build:
+      context: ./Tourism
+      dockerfile: Dockerfile
+    image: tourism:v1
+    environment:
+      - PORT=8020
+    env_file:
+      - Tourism/.env
+    ports:
+      - "8000:8020"
+    command: sh -c "chmod +x /app/collectstatic.sh && sh /app/collectstatic.sh && chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"
+    volumes:
+      - staticfiles:/app/staticfiles/
   postgres:
     image: postgres
     # restart: always
@@ -49,5 +49,5 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  # staticfiles:
-  #   external: true
+  staticfiles:
+    # external: true

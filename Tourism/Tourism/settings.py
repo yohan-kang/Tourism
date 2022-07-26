@@ -47,6 +47,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -143,6 +144,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+STATICFILES_DIRS = [
+    BASE_DIR/"static",
+]
+
+STATIC_ROOT = BASE_DIR/"staticfiles"
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -176,3 +187,5 @@ PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3
 
 # Email settings
 EMAIL_BACKEND ="django.core.mail.backends.console.EmailBackend"
+
+
