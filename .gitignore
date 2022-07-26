@@ -2,7 +2,7 @@
 web/.env
 .DS_Store
 .kube/
-
+staticfiles/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
