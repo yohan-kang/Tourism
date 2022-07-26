@@ -1,21 +1,21 @@
 version: "3.9"
 services:
-  web:
-    depends_on:
-      - postgres
-    build:
-      context: ./Tourism
-      dockerfile: Dockerfile
-    image: tourism:v1
-    environment:
-      - PORT=8020
-    env_file:
-      - Tourism/.env
-    ports:
-      - "8000:8020"
-    command: sh -c "chmod +x /app/collectstatic.sh && sh /app/collectstatic.sh && chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"
-    volumes:
-      - staticfiles:/app/staticfiles/
+  # web:
+  #   depends_on:
+  #     - postgres
+  #   build:
+  #     context: ./Tourism
+  #     dockerfile: Dockerfile
+  #   image: tourism:v1
+  #   environment:
+  #     - PORT=8020
+  #   env_file:
+  #     - Tourism/.env
+  #   ports:
+  #     - "8000:8020"
+  #   command: sh -c "chmod +x /app/collectstatic.sh && sh /app/collectstatic.sh && chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"
+  #   volumes:
+  #     - staticfiles:/app/staticfiles/
   postgres:
     image: postgres
     # restart: always
@@ -27,6 +27,8 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - backend
 
   redis:
     image: redis
@@ -38,6 +40,8 @@ services:
     volumes:
       - redis_data:/data
     entrypoint: redis-server --appendonly yes --port 6380
+    networks:
+      - backend
 
   postgres-admin:
     image: dpage/pgadmin4
@@ -45,9 +49,14 @@ services:
       - 8080:80
     env_file:
       - Tourism/.env
+    networks:
+      - backend
 
 volumes:
   postgres_data:
   redis_data:
-  staticfiles:
+  # staticfiles:
     # external: true
+
+networks:
+  backend:
