@@ -48,3 +48,7 @@ class CustomPasswordValidator:
 def validate_no_special_characters(value):
     if contains_special_character(value):
         raise ValidationError("Cannot contain special characters.")
+
+def validate_accommodation_link(value):
+  if "place.naver.com" not in value and "place.map.kakao.com" not in value:
+      raise ValidationError("should be included in place.naver.com or place.map.kakao.com")
