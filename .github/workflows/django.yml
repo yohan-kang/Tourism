@@ -26,7 +26,6 @@ jobs:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
-      POSTGRES_READY: 1
     services:
           postgres_main:
             image: postgres
