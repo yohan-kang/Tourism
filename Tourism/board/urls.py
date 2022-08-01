@@ -1,10 +1,10 @@
-from django.conf.urls import url, include
+# from django.conf.urls import url, include
 from django.urls import path, include
 
 from . import views
 
 urlpatterns = [
-    path('', views.index, name="index"),
+    # path('', views.index, name="index"),
     path('viewjson/', views.viewjson, name="viewjson"),
     path('boardlist/', views.boardList, name="boardlist"),
     path('boardview/<str:pk>/', views.boardView, name="boardview"),

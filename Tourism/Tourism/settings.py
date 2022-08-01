@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'rest_framework'
+    'rest_framework',
+    'board',
 ]
 SITE_ID = 1
 
@@ -113,6 +114,7 @@ if DB_IS_AVAILABLE:
         }
     }
 
+print(DATABASES)
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 

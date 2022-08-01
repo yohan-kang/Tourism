@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # accounts
     path("", include('accounts.urls')),
+    #board
+    path("", include('board.urls')),
     # allauth
     path(
       "email-confirmation-done/", 
