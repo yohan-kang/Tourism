@@ -114,7 +114,32 @@ if DB_IS_AVAILABLE:
         }
     }
 
-print(DATABASES)
+REDIS_HOST = os.environ.get("REDIS_HOST")
+REDIS_PORT = os.environ.get("REDIS_PORT")
+REDIS_DEFAULT_EXPIRATION = os.environ.get("REDIS_DEFAULT_EXPIRATION")
+
+REDIS_IS_AVAILABLE = all([
+    REDIS_HOST,
+    REDIS_PORT,
+    REDIS_DEFAULT_EXPIRATION,
+])
+
+if REDIS_IS_AVAILABLE:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/',
+            'TIMEOUT': REDIS_DEFAULT_EXPIRATION,
+            'OPTIONS': {
+                'db': '0',
+                'parser_class': 'redis.connection.PythonParser',
+                'pool_class': 'redis.BlockingConnectionPool',
+            }
+        }
+    }
+
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
