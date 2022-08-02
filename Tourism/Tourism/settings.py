@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.toekn_blacklist'
     'rest_framework',
     'board',
 ]
@@ -113,6 +116,21 @@ if DB_IS_AVAILABLE:
             "PORT": DB_PORT,
         }
     }
+
+REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES' : (
+      'rest_framework_simplejwt.authentication.JWTAuthentication',
+  )
+}
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    # 'ROTATE_REFRESH_TOKENS': False,
+    # 'BLACKLIST_AFTER_ROTATION' : True,
+    'SIGNING_KEY': 'SECRET',
+    'ALGORITHM': 'HS256',
+    'AUTH_HEADER_TYPES': ('JWT',),
+}
 
 print(DATABASES)
 # Password validation
