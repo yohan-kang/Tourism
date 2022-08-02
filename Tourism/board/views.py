@@ -3,11 +3,11 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from django.http import JsonResponse
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Board
 from .serializers import BoardSerializer
+from django.core.cache import cache
 
 def viewjson(request):
     return JsonResponse("API base point...", safe=False)
@@ -22,7 +22,6 @@ def index(request):
         'Update': '/boardupdate/<str:pk>/',
         'Delete': '/boarddelete/<str:pk>/',
     }
-
     boards = Board.objects.all()
 
     serializer = BoardSerializer(boards, many=True)
@@ -33,19 +32,15 @@ def index(request):
 @api_view(['GET'])
 def boardList(request):
 
-    boards = Board.objects.all()
-    serializer = BoardSerializer(boards, many=True)
-
-    return Response(serializer.data)
+    data = cache.get_or_set('all_board',BoardSerializer(Board.objects.all(), many=True).data)
+    return Response(data)
 
 
 @api_view(['GET'])
 def boardView(request, pk):
 
-    boards = Board.objects.get(id=pk)
-    serializer = BoardSerializer(boards, many=False)
-
-    return Response(serializer.data)
+    data = cache.get_or_set(f'board:{pk}',BoardSerializer(Board.objects.get(id=pk), many=False).data)
+    return Response(data)
 
 
 @api_view(['POST'])
@@ -69,6 +64,7 @@ def boardUpdate(request, pk):
     if serializer.is_valid():
         print("Valid...")
         serializer.save()
+        cache.set(f'board:{pk}',Board.objects.get(id=pk))
     else:
         print("Invalid...")
 
