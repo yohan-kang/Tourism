@@ -55,7 +55,9 @@ INSTALLED_APPS = [
     'board',
 ]
 SITE_ID = 1
-
+REST_USE_JWT = True # Whether to use JWT
+# JWT_AUTH_COOKIE = 'my-app-auth'  # Cookie Key Value to Call
+# JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token' Refresh Token Cookie Key Value (if used)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -128,9 +130,9 @@ REST_FRAMEWORK = {
       'rest_framework.permissions.IsAuthenticated',
   ),
 	'DEFAULT_AUTHENTICATION_CLASSES' : (
-      # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-      'rest_framework.authentication.SessionAuthentication',
-      'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+      'rest_framework_simplejwt.authentication.JWTAuthentication',
+      # 'rest_framework.authentication.SessionAuthentication',
+      # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
   )
 }
 SIMPLE_JWT = {
