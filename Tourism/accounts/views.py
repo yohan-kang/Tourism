@@ -4,6 +4,10 @@ from django.shortcuts import reverse
 from django.http import HttpResponse
 from django.http import Http404
 from allauth.account.views import PasswordChangeView
+from rest_framework import viewsets
+from rest_framework import serializers
+from accounts.models import User
+
 
 # Create your views here.
 def list(request):
@@ -15,3 +19,11 @@ def list(request):
 class CustomPasswordChangeView(PasswordChangeView):
     def get_success_url(self):
       return reverse("list")
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

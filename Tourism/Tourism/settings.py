@@ -39,13 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    #accounts app
     'accounts',
+    #django-rest-auth
+    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    # 'rest_framework_simplejwt.toekn_blacklist'
+    'rest_framework',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    #django-allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'rest_framework_simplejwt',
-    # 'rest_framework_simplejwt.toekn_blacklist'
-    'rest_framework',
     'board',
 ]
 SITE_ID = 1
@@ -118,15 +124,21 @@ if DB_IS_AVAILABLE:
     }
 
 REST_FRAMEWORK = {
+  'DEFAULT_PERMISSION_CLASSES': (
+      'rest_framework.permissions.IsAuthenticated',
+  ),
 	'DEFAULT_AUTHENTICATION_CLASSES' : (
-      'rest_framework_simplejwt.authentication.JWTAuthentication',
+      # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+      'rest_framework.authentication.SessionAuthentication',
+      'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
   )
 }
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     # 'ROTATE_REFRESH_TOKENS': False,
     # 'BLACKLIST_AFTER_ROTATION' : True,
+    # 'UPDATE_LAST_LOGIN': False,
     'SIGNING_KEY': 'SECRET',
     'ALGORITHM': 'HS256',
     'AUTH_HEADER_TYPES': ('JWT',),
