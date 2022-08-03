@@ -4,16 +4,20 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.authentication import TokenAuthentication
 from .models import Board
 from .serializers import BoardSerializer
 from django.core.cache import cache
+from rest_framework.permissions import IsAuthenticated
 
 def viewjson(request):
     return JsonResponse("API base point...", safe=False)
 
 
 @api_view(['GET'])
+# @authentication_classes()
+@permission_classes([IsAuthenticated])
 def index(request):
     api_urls = {
         'List': '/boardlist/',

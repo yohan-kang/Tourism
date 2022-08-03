@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.shortcuts import reverse
+from django.http import JsonResponse 
 from django.http import HttpResponse
 from django.http import Http404
 from allauth.account.views import PasswordChangeView
@@ -8,6 +9,13 @@ from rest_framework import viewsets
 from rest_framework import serializers
 from accounts.models import User
 
+
+def getRoutes(requset):
+    routes = [
+        '/token',
+        '/token/refresh'
+    ]
+    return JsonResponse(routes,safe=False)
 
 # Create your views here.
 def list(request):
