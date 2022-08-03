@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from rest_framework_simplejwt import views as jwt_views
+# from rest_framework_simplejwt import views as jwt_views
 urlpatterns = [
     path('',views.getRoutes)
     # path('', include('dj_rest_auth.urls')),

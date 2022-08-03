@@ -1,13 +1,14 @@
 from django.http import JsonResponse 
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
-
+@api_view(['GET'])
 def getRoutes(requset):
     routes = [
         '/token',
         '/token/refresh'
     ]
-    return JsonResponse(routes,safe=False)
+    return Response(routes)
 
 # from django.conf import settings
 # from django.shortcuts import render
