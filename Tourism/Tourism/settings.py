@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     #django-rest-auth
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
-    # 'rest_framework_simplejwt.toekn_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
     'rest_framework',
     'dj_rest_auth',
     'dj_rest_auth.registration',
@@ -150,7 +150,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True, #If set to True, sending a refresh token returns a new access token and a refresh token
-    'BLACKLIST_AFTER_ROTATION': False,
+    'BLACKLIST_AFTER_ROTATION': True, #If set to True, the existing refresh token will be blacklisted
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',
