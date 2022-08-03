@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    # cors 
+    "corsheaders",
     #django-allauth
     'allauth',
     'allauth.account',
@@ -60,6 +62,9 @@ REST_USE_JWT = True # Whether to use JWT
 # JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token' Refresh Token Cookie Key Value (if used)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    "corsheaders.middleware.CorsMiddleware",
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -279,4 +284,4 @@ PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3
 # Email settings
 EMAIL_BACKEND ="django.core.mail.backends.console.EmailBackend"
 
-
+CORS_ALLOW_ALL_ORIGINS = True
