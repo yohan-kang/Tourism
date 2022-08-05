@@ -1,13 +1,13 @@
-import { createContext, userState, userEffect } from 'react'
-
+import { createContext, useState, userEffect } from 'react'
+import jwt_decode from 'jwt-decode'
 const AuthContext = createContext()
 
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
   
-  // let [authTokens, setAuthTokens] =useState(null)
-  // let [user, setUser] = useState(null)
+  let [authTokens, setAuthTokens] =useState(null)
+  let [user, setUser] = useState(null)
 
   let loginUser = async (e )=> {
       e.preventDefault()
@@ -19,9 +19,17 @@ export const AuthProvider = ({children}) => {
         body:JSON.stringify({'username':e.target.username.value,'password':e.target.password.value})
       })
       let data = await response.json()
-      console.log('data:',data)
+      // console.log('data:',data)
+      // console.log('response:',response)
+      if(response.status === 200){
+          setAuthTokens(data)
+          setUser(jwt_decode(data.access))
+      }else {
+        alert('something wnt wrong!')
+      }
     }
   let contextData = {
+      user:user,
       loginUser:loginUser
   }
 
