@@ -34,6 +34,7 @@ def index(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def boardList(request):
 
     data = cache.get_or_set('all_board',BoardSerializer(Board.objects.all(), many=True).data)
