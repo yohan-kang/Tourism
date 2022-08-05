@@ -8,8 +8,8 @@ const PrivateRoute = ({children, ...rest}) => {
   // console.log('Private route works')
   return(
       // <Route {...rest}>{children}</Route>
-      <Route {...rest}>{!user ? <Redirect to="/login"/> :  children}</Route>
-      // <Route {...rest}>{!user ? <Redirect to="/login" /> :  children}</Route>
+      //<Route {...rest}>{!authenticated ? <Redirect to="/login"/> :  children}</Route>
+      <Route {...rest}>{!user ? <Redirect to="/login" /> :  children}</Route>
   )
 
 }
