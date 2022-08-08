@@ -3,22 +3,33 @@ import AuthContext from '../context/AuthContext'
 
 const HomePage = () => {
   let [notes , setNotes] =useState([])
-  let {authTokens} = useContext(AuthContext)
+  let {authTokens ,logoutUser} = useContext(AuthContext)
 
   useEffect(() => {
       getNotes()
   },[])
 
   let getNotes = async()=>{
+      console.log(authTokens.access)
       let response = await fetch('http://127.0.0.1:8000/api/notes/',{
         method:'GET',
         headers: {
             'Content-Type':'application/json',
-            'Authorization':'Bearer' + String(authTokens.access)
+            'Authorization':'Bearer ' + String(authTokens.access)
         }
       })
-      let data = response.json()
-      setNotes(data)
+
+      console.log("json:"+response.json())
+      console.log("response:"+response.statusText)
+
+      let data = await response.json()
+
+      if(response.status === 200) {
+          setNotes(data)
+      } else if(response.statusText === 'Unauthorized') {
+          logoutUser()
+      }
+      
   }
 
   return (

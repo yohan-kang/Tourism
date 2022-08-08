@@ -152,7 +152,8 @@ REST_FRAMEWORK = {
 # }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    # 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=10),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=90),
     'ROTATE_REFRESH_TOKENS': True, #If set to True, sending a refresh token returns a new access token and a refresh token
     'BLACKLIST_AFTER_ROTATION': True, #If set to True, the existing refresh token will be blacklisted
