@@ -13,3 +13,8 @@ class User(AbstractUser):
   # only email login case 
   #   def __srt__(self):
   #       return self.email
+
+# ex)
+# class Note(models.Model):
+#   user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+#   body = models.TextField()

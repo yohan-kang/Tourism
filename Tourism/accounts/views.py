@@ -5,6 +5,12 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+# from Tourism.accounts import serializers
+
+
+from .serializers import NoteSerializer
+from accounts.models import User
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -27,6 +33,12 @@ def getRoutes(requset):
         '/token/refresh'
     ]
     return Response(routes)
+
+@api_view(['GET'])
+def getNotes(request):
+  notes = User.objects.all()
+  serializer = NoteSerializer(notes , many=True)
+  return Response(serializer.data)
 
 # from django.conf import settings
 # from django.shortcuts import render
