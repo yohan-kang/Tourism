@@ -31,13 +31,8 @@ jobs:
                 "link": "https://www.typescriptlang.org"
               },
               {
-                "badge": "https://img.shields.io/github/workflow/status/${{ env.repo_owner }}/${{ env.repo_name }}/Release/main?logo=github&style=flat-square",
-                "alt": "build",
-                "link": "${{ env.repo_url }}/actions/workflows/release.yml"
-              },
-              {
                 "badge": "https://img.shields.io/github/workflow/status/${{ env.repo_owner }}/${{ env.repo_name }}/actions/workflows/django.yml/badge.svg?style=flat-square",
                 "alt": "CI",
-                "link": "${{ env.repo_url }}/actions/workflows/release.yml"
+                "link": "${{ env.repo_url }}/actions/workflows/django.yml"
               }
             ]
