@@ -1,3 +1,3 @@
 # Tourism
 
-![example workflow](./workflows/django.yml/badge.svg)
+![example workflow](./.github/workflows/django.yml/badge.svg)
