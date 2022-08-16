@@ -31,7 +31,7 @@ jobs:
                 "link": "https://www.typescriptlang.org"
               },
               {
-                "badge": "https://img.shields.io/github/workflow/status/${{ env.repo_owner }}/${{ env.repo_name }}/django.yml?style=flat-square",
+                "badge": "https://img.shields.io/github/workflow/status/${{ env.repo_owner }}/${{ env.repo_name }}/main?style=flat-square",
                 "alt": "CI",
                 "link": "${{ env.repo_url }}/actions/workflows/django.yml"
               }
