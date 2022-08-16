@@ -6,5 +6,3 @@
 [![Language](https://img.shields.io/github/languages/top/yohan-kang/Tourism?style=flat-square)](https://www.typescriptlang.org)
 [![CI](https://github.com/yohan-kang/Tourism/actions/workflows/django.yml/badge.svg?style=flat-square)](https://github.com/yohan-kang/Tourism/actions/workflows/django.yml)
 <!-- [END BADGES] -->
-
-![example workflow](https://github.com/yohan-kang/Tourism/actions/workflows/django.yml/badge.svg)
