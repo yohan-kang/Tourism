@@ -1,5 +1,7 @@
 name: Add Badges
 on:
+  workflow_call:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Django CI"]
     branches: [main]
