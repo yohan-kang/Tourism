@@ -19,16 +19,3 @@ const Header = () => {
   )
 }
 export default Header
-
-// function  Header () {
-//   let {name} = useContext(AuthContext)
-//   return (
-//     <div>
-//         <Link to="/">HOME</Link>
-//         <span> | </span>
-//         <Link to="/login">Login</Link>
-//         <p>Hello {name} </p>
-//     </div>
-//   )
-// }
-// export default Header
