@@ -1,7 +1,7 @@
 name: Add Badges
 on:
   workflow_run:
-    workflows: ["workflows"]
+    workflows: ["Django CI"]
     branches: [main]
     types: 
       - completed
