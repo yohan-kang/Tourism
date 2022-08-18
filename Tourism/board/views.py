@@ -42,9 +42,6 @@ def boardList(request):
     serializer = BoardSerializer(data, many=True)
     return Response(serializer.data)
 
-    # data = cache.get_or_set('all_board',BoardSerializer(Board.objects.all(), many=True).data)
-    # return Response(data)
-
 @api_view(['POST'])
 def boardInsert(request):
     serializer = BoardSerializer(data=request.data)
@@ -53,11 +50,6 @@ def boardInsert(request):
         serializer.save()
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=404)
-    # else:
-    #     print("Invalid...")
-    #     return (serializer.errors, status=status.HTTP_404_NOT_FOUND)
-    # return Response(serializer.data, status=201)
-
 
 @api_view(['GET' ,'PUT','DELETE'])
 def boardView(request, pk):
@@ -71,8 +63,6 @@ def boardView(request, pk):
     if request.method == 'GET':
       serializer = BoardSerializer(obj_data)
       return Response(serializer.data)
-    # data = cache.get_or_set(f'board:{pk}',BoardSerializer(Board.objects.get(id=pk), many=False).data)
-    # return Response(data)
 
     # Update part
     elif request.method == 'PUT':
@@ -86,21 +76,6 @@ def boardView(request, pk):
     elif request.method == 'DELETE':
         obj_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-# @api_view(['PUT'])
-# def boardUpdate(request, pk):
-#     board = Board.objects.get(id=pk)
-#     serializer = BoardSerializer(instance=board, data=request.data)
-
-#     if serializer.is_valid():
-#         print("Valid...")
-#         serializer.save()
-#         cache.set(f'board:{pk}',Board.objects.get(id=pk))
-#     else:
-#         print("Invalid...")
-
-#     return Response(serializer.data)
-
 
 @api_view(['DELETE'])
 def boardDelete(request, pk):
