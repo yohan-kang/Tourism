@@ -43,11 +43,12 @@ def boardList(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
-def boardInsert(request):
+@permission_classes([IsAuthenticated])
+def boardInsert(request, *args, **kwargs):
     serializer = BoardSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(accessUser=request.user)
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=404)
 
