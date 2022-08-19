@@ -42,11 +42,20 @@ def boardList(request):
     serializer = BoardSerializer(data, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def userboardList(request):
+    if request.user.is_superuser : 
+      data = Board.objects.all().order_by('id')
+    else :
+      data = Board.objects.all().filter(accessUser=request.user).all()
+    serializer = BoardSerializer(data, many=True)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def boardInsert(request, *args, **kwargs):
     serializer = BoardSerializer(data=request.data)
-
     if serializer.is_valid():
         serializer.save(accessUser=request.user)
         return Response(serializer.data, status=201)

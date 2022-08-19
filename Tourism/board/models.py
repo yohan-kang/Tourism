@@ -12,3 +12,7 @@ class Board(models.Model):
     class Meta:
         managed = True
         db_table = 'myapp_board'
+
+    def __str__(self) -> str:
+      return self.accessUser.get_username()
+        # return self.b_title + " " + self.b_writer + " " + self.accessUser.get_username()

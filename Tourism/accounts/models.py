@@ -10,6 +10,9 @@ class User(AbstractUser):
       validators=[validate_no_special_characters],
       error_messages={"unique": "This nickname is already in use"},
     )
+
+    def __str__(self) -> str:
+        return super().__str__()
   # only email login case 
   #   def __srt__(self):
   #       return self.email

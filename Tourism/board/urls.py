@@ -7,6 +7,7 @@ urlpatterns = [
     # path('', views.index, name="index"),
     path('viewjson/', views.viewjson, name="viewjson"),
     path('boardlist/', views.boardList, name="boardList"),
+    path('userboardlist/', views.userboardList, name="userboardList"),
     path('boardview/<str:pk>/', views.boardView, name="boardView"),
     path('boardinsert/', views.boardInsert, name="boardInsert"),
     # path('boardupdate/<str:pk>/', views.boardUpdate, name="boardupdate"),
