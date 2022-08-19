@@ -27,7 +27,7 @@ def index(request):
         # 'Update': '/boardUpdate/<str:pk>/',
         'Delete': '/boardDelete/<str:pk>/',
     }
-    boards = Board.objects.all()
+    boards = Board.objects.all().order_by('id')
 
     serializer = BoardSerializer(boards, many=True)
 
@@ -38,7 +38,7 @@ def index(request):
 # @permission_classes([IsAuthenticated])
 def boardList(request):
 
-    data = Board.objects.all()
+    data = Board.objects.all().order_by('id')
     serializer = BoardSerializer(data, many=True)
     return Response(serializer.data)
 

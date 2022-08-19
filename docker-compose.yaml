@@ -34,12 +34,12 @@ services:
     image: redis
     # restart: always
     expose:
-      - 6380
+      - 6379
     ports:
-      - "6380:6380"
+      - "6379:6379"
     volumes:
       - redis_data:/data
-    entrypoint: redis-server --appendonly yes --port 6380
+    entrypoint: redis-server --appendonly yes --port 6379
     networks:
       - backend
 
@@ -51,10 +51,15 @@ services:
       - Tourism/.env
     networks:
       - backend
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
 
 volumes:
   postgres_data:
   redis_data:
+  pgadmin:
   # staticfiles:
     # external: true
 
