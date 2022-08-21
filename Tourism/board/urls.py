@@ -5,8 +5,11 @@ from . import views
 
 urlpatterns = [
   # -- use APIView case --
-  path('',views.BoardList.as_view()),
-  path('<int:pk>/',views.BoardDetail.as_view())
+  path('',views.BoardAllList.as_view()),
+  path('writer/',views.BoardWriterList.as_view()),
+  path('writer/<int:pk>/',views.BoardDetail.as_view())
+
+
 
     # -- use api_view case --
 
