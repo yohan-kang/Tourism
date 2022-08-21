@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,85 +13,154 @@ from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
-def viewjson(request):
-    return JsonResponse("API base point...", safe=False)
+# --APIView case import add--
+from rest_framework.views import APIView
+from django.http import Http404
+# from Tourism.board import serializers
 
 
-@api_view(['GET'])
-# @authentication_classes()
-# @permission_classes([IsAuthenticated])
-def index(request):
-    api_urls = {
-        'List': '/boardList/',
-        'Detail': '/boardView/<str:pk>/',
-        'Create': '/boardInsert/',
-        # 'Update': '/boardUpdate/<str:pk>/',
-        'Delete': '/boardDelete/<str:pk>/',
-    }
-    boards = Board.objects.all().order_by('id')
+class BoardList(APIView):
 
-    serializer = BoardSerializer(boards, many=True)
-
-    return Response(api_urls)
-
-
-@api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-def boardList(request):
-
-    data = Board.objects.all().order_by('id')
-    serializer = BoardSerializer(data, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def userboardList(request):
-    if request.user.is_superuser : 
-      data = Board.objects.all().order_by('id')
-    else :
-      data = Board.objects.all().filter(accessUser=request.user).all()
-    serializer = BoardSerializer(data, many=True)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def boardInsert(request, *args, **kwargs):
+  # 
+  def post(self, format=None):
     serializer = BoardSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(accessUser=request.user)
-        return Response(serializer.data, status=201)
-    return Response(serializer.errors, status=404)
+      serializer.save()
+      return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET' ,'PUT','DELETE'])
-def boardView(request, pk):
+  #
+  def get(self,request,format=None):
+    queryset = Board.objects.all()
+    serializer = BoardSerializer(queryset,many=True)
+    return Response(serializer.data)
 
-    try:
-        obj_data = Board.objects.get(pk=pk)
-    except obj_data.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    # Detail part
-    if request.method == 'GET':
-      serializer = BoardSerializer(obj_data)
+
+class BoardDetail(APIView):
+
+    def get_object(self, pk):
+      try:
+        return Board.objects.get(pk=pk)
+      except Board.DoesNotExist:
+        raise Http404
+
+    # 
+    def get(self,request,pk):
+      post = self.get_object(pk)
+      serializer = BoardSerializer(post)
       return Response(serializer.data)
 
-    # Update part
-    elif request.method == 'PUT':
-        serializer = BoardSerializer(obj_data, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #
+    def put(self,request,pk,format=None):
+      post = self.get_object(pk)
+      serializer = BoardSerializer(post, data=request.data)
+      if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+      return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-    # Delete 
-    elif request.method == 'DELETE':
-        obj_data.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    # 
+    def delete(self,request,pk,format=None):
+      post =self.get_object(pk)
+      post.delete()
+      return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['DELETE'])
-def boardDelete(request, pk):
-    board = Board.objects.get(id=pk)
-    if board:
-        board.delete()
 
-    return Response("Deleted...")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # ---- use api_view case----
+
+# def viewjson(request):
+#     return JsonResponse("API base point...", safe=False)
+# @api_view(['GET'])
+# # @authentication_classes()
+# # @permission_classes([IsAuthenticated])
+# def index(request):
+#     api_urls = {
+#         'List': '/boardList/',
+#         'Detail': '/boardView/<str:pk>/',
+#         'Create': '/boardInsert/',
+#         # 'Update': '/boardUpdate/<str:pk>/',
+#         'Delete': '/boardDelete/<str:pk>/',
+#     }
+#     boards = Board.objects.all().order_by('id')
+
+#     serializer = BoardSerializer(boards, many=True)
+
+#     return Response(api_urls)
+
+
+# @api_view(['GET'])
+# # @permission_classes([IsAuthenticated])
+# def boardList(request):
+
+#     data = Board.objects.all().order_by('id')
+#     serializer = BoardSerializer(data, many=True)
+#     return Response(serializer.data)
+
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def userboardList(request):
+#     if request.user.is_superuser : 
+#       data = Board.objects.all().order_by('id')
+#     else :
+#       data = Board.objects.all().filter(accessUser=request.user).all()
+#     serializer = BoardSerializer(data, many=True)
+#     return Response(serializer.data)
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def boardInsert(request, *args, **kwargs):
+#     serializer = BoardSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save(accessUser=request.user)
+#         return Response(serializer.data, status=201)
+#     return Response(serializer.errors, status=404)
+
+# @api_view(['GET' ,'PUT','DELETE'])
+# def boardView(request, pk):
+
+#     try:
+#         obj_data = Board.objects.get(pk=pk)
+#     except obj_data.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+#     # Detail part
+#     if request.method == 'GET':
+#       serializer = BoardSerializer(obj_data)
+#       return Response(serializer.data)
+
+#     # Update part
+#     elif request.method == 'PUT':
+#         serializer = BoardSerializer(obj_data, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     # Delete 
+#     elif request.method == 'DELETE':
+#         obj_data.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# @api_view(['DELETE'])
+# def boardDelete(request, pk):
+#     board = Board.objects.get(id=pk)
+#     if board:
+#         board.delete()
+
+#     return Response("Deleted...")
