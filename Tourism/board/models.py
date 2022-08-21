@@ -14,5 +14,6 @@ class Board(models.Model):
         db_table = 'myapp_board'
 
     def __str__(self) -> str:
-      return self.writer.get_username()
+      return self.writer.get_nickname()  + " " + self.writer.nickname()
+      # return self.writer.get_username()
         # return self.b_title + " " + self.b_writer + " " + self.accessUser.get_username()
