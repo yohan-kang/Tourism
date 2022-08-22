@@ -15,6 +15,7 @@ from rest_framework import status
 
 # --APIView case import add--
 from rest_framework.views import APIView
+from rest_framework import generics
 from django.http import Http404
 # from Tourism.board import serializers
 
@@ -115,6 +116,22 @@ class BoardDetail(APIView):
 
 
 
+
+class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
+  permission_classes = [IsAuthenticated]
+  queryset = Board.objects.all()
+  serializer_class = BoardSerializer
+
+
+class BoardList2(generics.ListCreateAPIView):
+  permission_classes = [IsAuthenticated]
+  serializer_class = BoardSerializer
+  def get_queryset(self):
+    user = self.request.user
+    return Board.objects.filter(writer=user)
+
+  def perform_create(self, serializer):
+    serializer.save(writer=self.request.user)
 
 
 
