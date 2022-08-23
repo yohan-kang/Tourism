@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "../api/axios";
-import useRefreshToken from "../hooks/useRefreshToken";
-import AuthContext from "../contexts/AuthContext";
-
-type Props = {};
+import React, { useState, useEffect } from "react";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface IBoard {
   boards: {
@@ -11,29 +8,27 @@ interface IBoard {
   }[];
 }
 
-function BoardList({}: Props) {
+function BoardList() {
   const [boards, setBoards] = useState<IBoard["boards"]>([]);
-  const refresh = useRefreshToken();
-  const { auth, setAuth } = useContext(AuthContext);
+  const axiosPrivate = useAxiosPrivate();
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let isMounted = true;
-    const controller = new AbortController();
 
     const getBoards = async () => {
       console.log("getBoard");
       try {
-        const response = await axios.get("/boards/writer2/", {
-          signal: controller.signal,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.accessToken}`,
-          },
+        const response = await axiosPrivate.get("/boards/writer2/", {
+          // signal: controller.signal,
         });
         console.log(response.data);
-        if (isMounted) setBoards(response.data);
+        isMounted && setBoards(response.data);
       } catch (error) {
         console.error(error);
+        navigate("/login", { state: { from: location }, replace: true });
       }
     };
 
@@ -41,9 +36,9 @@ function BoardList({}: Props) {
 
     return () => {
       isMounted = false;
-      controller.abort();
+      // controller.abort();
     };
-  }, [auth.accessToken]);
+  }, []);
 
   return (
     <div>
@@ -58,7 +53,6 @@ function BoardList({}: Props) {
         ) : (
           <p>No boards to display</p>
         )}
-        <button onClick={() => refresh(auth.refreshToken)}>Refresh</button>
         <br />
       </article>
     </div>

@@ -4,7 +4,21 @@ type Props = {
   children: any;
 };
 
-const AuthContext: any = createContext({});
+interface IAuth {
+  username: string;
+  accessToken: string;
+  refreshToken: string;
+}
+
+interface IContext {
+  auth: any;
+  setAuth: any;
+}
+
+const AuthContext: React.Context<IContext> = createContext<IContext>({
+  auth: {},
+  setAuth: null,
+});
 
 export function AuthProvider({ children }: Props) {
   const [auth, setAuth] = useState({});

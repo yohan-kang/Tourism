@@ -6,15 +6,18 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Header from "./components/Header";
 import BoardList from "./pages/BoardList";
+import PersistLogin from "./components/PersistLogin";
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/boards" element={<BoardList />} />
+        <Route element={<PersistLogin />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/boards" element={<BoardList />} />
+        </Route>
       </Routes>
     </>
   );
