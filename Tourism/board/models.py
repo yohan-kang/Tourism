@@ -15,7 +15,7 @@ class Board(models.Model):
         managed = True
         db_table = 'myapp_board'
 
-    def __str__(self) -> str:
-      return self.writer.get_username()  + " " + self.title
+    # def __str__(self) -> str:
+    #   return self.writer.get_username()  + " " + self.title
       # return self.writer.get_username()
         # return self.b_title + " " + self.b_writer + " " + self.accessUser.get_username()

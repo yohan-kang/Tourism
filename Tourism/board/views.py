@@ -11,110 +11,37 @@ from .models import Board
 from .serializers import BoardSerializer
 from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
 
 # --APIView case import add--
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics,permissions
 from django.http import Http404
 # from Tourism.board import serializers
 
-# @permission_classes([IsAuthenticated])
-class BoardAllList(APIView):
-
-  # 
-  def post(self, format=None):
-    serializer = BoardSerializer(data=request.data)
-    if serializer.is_valid():
-      serializer.save()
-      return Response(serializer.data,status=status.HTTP_201_CREATED)
-    return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
-  #
-  def get(self,request,format=None):
-    queryset = Board.objects.all()
-    serializer = BoardSerializer(queryset,many=True)
-    return Response(serializer.data)
+# custom permissions
+from .permissions import IsStaffEditorPermission
 
 
+class BoardAllList(generics.ListAPIView):
+  queryset = Board.objects.all()
+  serializer_class = BoardSerializer
 
+class BoardWriterList(generics.ListCreateAPIView):
+  permission_classes = [permissions.IsAdminUser,IsStaffEditorPermission]
+  # permission_classes = [IsAuthenticatedOrReadOnly]
+  # permission_classes = [permissions.DjangoModelPermissions ]
+  serializer_class = BoardSerializer
+  def get_queryset(self):
+    user = self.request.user
+    return Board.objects.filter(writer=user)
 
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def userboardList(request):
-#     if request.user.is_superuser : 
-#       data = Board.objects.all().order_by('id')
-#     else :
-#       data = Board.objects.all().filter(accessUser=request.user).all()
-#     serializer = BoardSerializer(data, many=True)
-#     return Response(serializer.data)
-
-
-class BoardWriterList(APIView):
-  #
-  def get(self,request,format=None):
-    try:
-        if request.user.is_superuser : 
-          data = Board.objects.all().order_by('id')
-        else :
-          data = Board.objects.all().filter(writer=request.user).all()
-        serializer = BoardSerializer(data, many=True)
-        return Response(serializer.data)
-    except data.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # queryset = Board.objects.all()
-    # serializer = BoardSerializer(queryset,many=True)
-    # return Response(serializer.data)
-
-  # 
-  def post(self, format=None):
-    serializer = BoardSerializer(data=request.data)
-    if serializer.is_valid():
-      serializer.save()
-      return Response(serializer.data,status=status.HTTP_201_CREATED)
-    return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
-class BoardDetail(APIView):
-
-    # purpose: When accessing the page, first check if there is data that meets the conditions.
-    def get_object(self,request, pk):
-      try:
-        print("start get object-------------------------------------")
-        print(request.user)
-        return Board.objects.filter(writer=request.user,pk=pk)
-        # return Board.objects.get(pk=pk)
-      except Board.DoesNotExist:
-        raise Http404
-
-    # 
-    def get(self,request,pk,format=None):
-      print("request.user-------------------------------------")
-      print(request.user)
-      print(pk)
-      post = self.get_object(pk)  #Board.objects.get(pk=pk)를 의미
-      #  get_object() missing 2 required positional arguments: 'request' and 'pk'
-      serializer = BoardSerializer(post)
-      return Response(serializer.data)
-
-    #
-    def put(self,request,pk,format=None):
-      post = self.get_object(pk)
-      serializer = BoardSerializer(post, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-      return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-    # 
-    def delete(self,request,pk,format=None):
-      post =self.get_object(pk)
-      post.delete()
-      return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
+class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
+  permission_classes = [IsAuthenticated]
+  serializer_class = BoardSerializer
+  # def get_queryset(self):
+  #   user = self.request.user
+  #   print(self.request.path_info)
+  #   return Board.objects.filter(writer=user)
 
 
 class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
