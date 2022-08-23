@@ -9,17 +9,22 @@ import React, {
 import AuthContext from "../contexts/AuthContext";
 
 import axios from "../api/axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+
 const LOGIN_URL = "/api/token/";
 
-type Props = {};
-
 function Login() {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useAuth();
   const usernameRef: any = useRef();
   const errRef: any = useRef();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  const navigate = useNavigate();
+  const location: any = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     usernameRef?.current?.focus();
@@ -43,11 +48,15 @@ function Login() {
       );
       const accessToken = response?.data?.access;
       const refreshToken = response?.data?.refresh;
-      console.log(auth);
+      console.log(accessToken, refreshToken);
       setAuth({ username, accessToken, refreshToken });
+      localStorage.setItem("refresh_token", response.data.refresh);
+      localStorage.setItem("access_token", response.data.access);
+      localStorage.setItem("username", username);
       console.log(auth);
       setUsername("");
       setPassword("");
+      navigate(from, { replace: true });
     } catch (err: any) {
       if (!err?.response) {
         setErrMsg("No Server Response");

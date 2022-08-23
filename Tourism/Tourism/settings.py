@@ -28,7 +28,9 @@ DEBUG = str(os.environ.get("DEBUG")) == '1'
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost','kubernetes.docker.internal']
 
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -160,14 +162,14 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',
-    # 'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
     'JWK_URL': None,
     'LEEWAY': 0,
 
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
@@ -182,6 +184,13 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+
+    'AUTH_COOKIE': 'access_token',  # Cookie name. Enables cookies if value is set.
+    'AUTH_COOKIE_DOMAIN': None,     # A string like "example.com", or None for standard domain cookie.
+    'AUTH_COOKIE_SECURE': False,    # Whether the auth cookies should be secure (https:// only).
+    'AUTH_COOKIE_HTTP_ONLY' : True, # Http only cookie flag.It's not fetch by javascript.
+    'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
+    'AUTH_COOKIE_SAMESITE': 'Lax',  # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
 }
 
 print(DATABASES)
@@ -276,7 +285,7 @@ ACCOUNT_SIGNUP_FORM_CLASS ="accounts.forms.SignupForm"
 ACCOUNT_SESSION_REMEMBER =True
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE =True
 # ACCOUNT_EMAIL_VARIFICATION ="optional"  // This part is the default even if you erase it
-SESSION_COOKIE_AGE = 180
+SESSION_COOKIE_AGE = 60 * 60 * 24
 ACCOUNT_CONFIRM_EMAIL_ON_GET=True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "account_email_confirmation_done"
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = "account_email_confirmation_done"
@@ -285,4 +294,6 @@ PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3
 # Email settings
 EMAIL_BACKEND ="django.core.mail.backends.console.EmailBackend"
 
-CORS_ALLOW_ALL_ORIGINS = True
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
