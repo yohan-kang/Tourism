@@ -1,25 +1,35 @@
+from itertools import product
 from urllib import request
 from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render
 from django.http import JsonResponse
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.authentication import TokenAuthentication
 from .models import Board
 from .serializers import BoardSerializer
 from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticated
 
+# --api_view case import add--
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from django.http import Http404
+
 # --APIView case import add--
 from rest_framework.views import APIView
 from rest_framework import generics,permissions
-from django.http import Http404
 # from Tourism.board import serializers
 
 # custom permissions
 from .permissions import IsStaffEditorPermission
+
+
+# class somethingAPIView(generics.RetrieveAPIView):
+#     queryset = Board.objects.all()
+#     serializer_class = BoardSerializer
+# board_view = somethingAPIView.as_view()
+
 
 
 class BoardAllList(generics.ListAPIView):
@@ -34,6 +44,16 @@ class BoardWriterList(generics.ListCreateAPIView):
   def get_queryset(self):
     user = self.request.user
     return Board.objects.filter(writer=user)
+  
+  # how to use perform_create : 
+  #def perform_create(self, serializer):
+    ## serializer.save(writer=self.request.user)
+    # print(serializer.validated_data)
+    # title = serializer.validated_data.get('title')
+    # content= serializer.validated_data.get('content') or None
+    # if content is None:
+    #     content = title
+    # serializer.save(content= content)
 
 class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticated]
@@ -48,7 +68,7 @@ class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticated]
   queryset = Board.objects.all()
   serializer_class = BoardSerializer
-
+  # lookup_field = 'username'
 
 class BoardList2(generics.ListCreateAPIView):
   permission_classes = [IsAuthenticated]
