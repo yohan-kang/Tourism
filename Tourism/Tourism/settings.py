@@ -28,9 +28,7 @@ DEBUG = str(os.environ.get("DEBUG")) == '1'
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost','kubernetes.docker.internal']
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -69,11 +67,11 @@ MIDDLEWARE = [
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'Tourism.urls'
@@ -218,6 +216,24 @@ if REDIS_IS_AVAILABLE:
         }
     }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+]
 
 
 # Password validation
@@ -295,5 +311,5 @@ PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3
 EMAIL_BACKEND ="django.core.mail.backends.console.EmailBackend"
 
 
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
+# if DEBUG:
+#     CORS_ALLOW_ALL_ORIGINS = True

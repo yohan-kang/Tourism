@@ -16,6 +16,7 @@ const LOGIN_URL = "/api/token/";
 
 function Login() {
   const { auth, setAuth } = useAuth();
+  // const { auth, setAuth } = useContext(AuthContext);
   const usernameRef: any = useRef();
   const errRef: any = useRef();
   const [username, setUsername] = useState("");
@@ -50,9 +51,7 @@ function Login() {
       const refreshToken = response?.data?.refresh;
       console.log(accessToken, refreshToken);
       setAuth({ username, accessToken, refreshToken });
-      localStorage.setItem("refresh_token", response.data.refresh);
-      localStorage.setItem("access_token", response.data.access);
-      localStorage.setItem("username", username);
+      localStorage.setItem("refresh_token", refreshToken);
       console.log(auth);
       setUsername("");
       setPassword("");

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .views import MyTokenObtainPairView
+from .views import MyTokenObtainPairView,LogoutView
 from rest_framework_simplejwt.views import(
   # TokenObtainPairView, #  views에 MyTokenObtainPairSerializer 사용하므로 필요없다
   TokenRefreshView,
@@ -12,6 +12,7 @@ urlpatterns = [
     path('notes/', views.getNotes),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('logout/', LogoutView.as_view(), name='auth_logout'),
 
 ]
 

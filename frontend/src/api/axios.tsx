@@ -11,5 +11,5 @@ export const axiosPrivate = axios.create({
     "Content-Type": "application/json",
     accept: "application/json",
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
