@@ -6,7 +6,7 @@ import useAuth from "../hooks/useAuth";
 const LOGIN_URL = "/api/token/";
 
 function Login() {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const usernameRef: any = useRef();
   const errRef: any = useRef();
   const [username, setUsername] = useState("");
@@ -16,6 +16,10 @@ function Login() {
   const navigate = useNavigate();
   const location: any = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  useEffect(() => {
+    if (auth?.username) navigate(from, { replace: true });
+  }, []);
 
   useEffect(() => {
     usernameRef?.current?.focus();

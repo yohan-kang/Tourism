@@ -1,10 +1,8 @@
 from django.urls import path, include
 from . import views
-from .views import MyTokenObtainPairView,LogoutView
+from .views import MyTokenObtainPairView
 from rest_framework_simplejwt.views import(
-  # TokenObtainPairView, #  views에 MyTokenObtainPairSerializer 사용하므로 필요없다
   TokenRefreshView,
-  TokenVerifyView,
   TokenBlacklistView
 )
 

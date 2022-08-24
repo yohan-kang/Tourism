@@ -20,10 +20,8 @@ function BoardList() {
     let isMounted = true;
 
     const getBoards = async () => {
-      console.log("getBoard");
       try {
         const response = await axiosPrivate.get("/boards/writer2/", {});
-        console.log(response.data);
         isMounted && setBoards(response.data);
       } catch (error) {
         console.error(error);
@@ -40,7 +38,6 @@ function BoardList() {
 
   return (
     <>
-      <Header />
       <div>
         <h1>BoardList</h1>
         <article>
