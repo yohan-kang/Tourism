@@ -19,10 +19,11 @@ export default function Header() {
   }, []);
   return (
     <>
-      <h1>
-        {auth?.username ? `Hello ${auth.username}` : `You are not logged in`}
-      </h1>
       <div>
+        <span>
+          {auth?.username ? `Hello ${auth.username}` : `You are not logged in`}
+        </span>
+        <span> | </span>
         <Link to="/">Home</Link>
         <span> | </span>
         <Link to="/boards">BoardList</Link>

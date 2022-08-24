@@ -1,11 +1,18 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function Home() {
+  const { auth } = useAuth();
   return (
     <>
-      <div>
-        <h1>Home</h1>
-      </div>
+      {auth?.username ? (
+        <div>
+          <h1>Home</h1>
+        </div>
+      ) : (
+        <Navigate to="/login" />
+      )}
     </>
   );
 }

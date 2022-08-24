@@ -1,5 +1,5 @@
 interface IFetchGet {
-  (url: string, config?: {}): any;
+  (url: string, config?: any): any;
 }
 
 interface IFetchPost {

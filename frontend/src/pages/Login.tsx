@@ -19,11 +19,10 @@ function Login() {
 
   useEffect(() => {
     if (auth?.username) navigate(from, { replace: true });
-  }, []);
-
-  useEffect(() => {
     usernameRef?.current?.focus();
   }, []);
+
+  // useEffect(() => {}, []);
 
   useEffect(() => {
     setErrMsg("");

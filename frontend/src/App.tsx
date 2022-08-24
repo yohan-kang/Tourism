@@ -7,6 +7,7 @@ import BoardList from "./pages/BoardList";
 import PersistLogin from "./components/PersistLogin";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
+import BoardDetail from "./pages/BoardDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             {/* <Route element={<RequireAuth allowedRoles={[]} />}> */}
             <Route path="boards" element={<BoardList />} />
+            <Route path="boards/:id" element={<BoardDetail />} />
             {/* </Route> */}
           </Route>
         </Route>
