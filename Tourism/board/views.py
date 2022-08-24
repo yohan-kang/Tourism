@@ -16,13 +16,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from django.http import Http404
 
-# --APIView case import add--
-from rest_framework.views import APIView
-from rest_framework import generics,permissions
+# --APIView(generics),permission case import add--
+# from rest_framework.views import APIView
+from rest_framework import generics,permissions,authentication
 # from Tourism.board import serializers
 
 # custom permissions
 from .permissions import IsStaffEditorPermission
+# custom mixins
+from .mixins import StaffEditorPermissionMixin
 
 
 # class somethingAPIView(generics.RetrieveAPIView):
@@ -38,7 +40,6 @@ class BoardAllList(generics.ListAPIView):
 
 class BoardWriterList(generics.ListCreateAPIView):
   permission_classes = [permissions.IsAdminUser,IsStaffEditorPermission]
-  # permission_classes = [IsAuthenticatedOrReadOnly]
   # permission_classes = [permissions.DjangoModelPermissions ]
   serializer_class = BoardSerializer
   def get_queryset(self):
@@ -62,6 +63,21 @@ class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
   #   user = self.request.user
   #   print(self.request.path_info)
   #   return Board.objects.filter(writer=user)
+
+
+# class BoardListCreateAPIViewt(StaffEditorPermissionMixin,generics.ListCreateAPIView):  if use this don.t need permission_classes
+class BoardListCreateAPIViewt(generics.ListCreateAPIView):
+  queryset = Board.objects.all()
+  serializer_class = BoardSerializer
+
+  # I don't know it's necessary or not.
+  # authentication_classes = [authentication.SessionAuthentication]
+  # authentication_classes = [authentication.TokenAuthentication]
+  # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+  #eyelike v2 web, we need to think about what we need this for
+  permission_classes = [permissions.DjangoModelPermissions] # user private Permissions check
+  # permission_classes = [IsStaffEditorPermission]    # staff check
 
 
 class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):

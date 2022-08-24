@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
   # -- use APIView case --
   path('',views.BoardAllList.as_view()),
+  path('ListApi/',views.BoardListCreateAPIViewt.as_view()),
   path('writer/',views.BoardWriterList.as_view()),
   path('writer2/',views.BoardList2.as_view()),
   path('writer/<int:pk>/',views.BoardDetail.as_view()),
