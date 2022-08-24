@@ -6,10 +6,10 @@ import useLogout from "../hooks/useLogout";
 type Props = {};
 
 export default function Header({}: Props) {
-  const { auth, setAuth } = useContext(AuthContext);
+  // const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const logout = useLogout();
-  // const { auth, setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [username, setUsername] = useState("");
 
   const signOut = async () => {
@@ -18,12 +18,13 @@ export default function Header({}: Props) {
   };
 
   useEffect(() => {
-    console.log(auth);
-    setUsername(auth?.username || "");
-  }, [auth]);
+    setUsername(username || "");
+  }, []);
   return (
     <>
-      <h1>{username ? `Hello ${username}` : `You are not logged in`}</h1>
+      <h1>
+        {auth?.username ? `Hello ${auth.username}` : `You are not logged in`}
+      </h1>
       <div>
         <Link to="/">Home</Link>
         <span> | </span>

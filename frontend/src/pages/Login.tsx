@@ -1,13 +1,4 @@
-import React, {
-  SyntheticEvent,
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-} from "react";
-
-import AuthContext from "../contexts/AuthContext";
-
+import { SyntheticEvent, useState, useRef, useEffect } from "react";
 import axios from "../api/axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -15,8 +6,7 @@ import useAuth from "../hooks/useAuth";
 const LOGIN_URL = "/api/token/";
 
 function Login() {
-  const { auth, setAuth } = useAuth();
-  // const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const usernameRef: any = useRef();
   const errRef: any = useRef();
   const [username, setUsername] = useState("");
@@ -44,15 +34,13 @@ function Login() {
         JSON.stringify({ username, password }),
         {
           headers: { "Content-Type": "application/json" },
-          // withCredentials: true,
+          withCredentials: true,
         }
       );
       const accessToken = response?.data?.access;
       const refreshToken = response?.data?.refresh;
-      console.log(accessToken, refreshToken);
       setAuth({ username, accessToken, refreshToken });
       localStorage.setItem("refresh_token", refreshToken);
-      console.log(auth);
       setUsername("");
       setPassword("");
       navigate(from, { replace: true });

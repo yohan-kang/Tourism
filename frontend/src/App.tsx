@@ -7,16 +7,21 @@ import Login from "./pages/Login";
 import Header from "./components/Header";
 import BoardList from "./pages/BoardList";
 import PersistLogin from "./components/PersistLogin";
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   return (
     <>
-      <Header />
       <Routes>
-        <Route element={<PersistLogin />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/boards" element={<BoardList />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="login" element={<Login />} />
+          <Route element={<PersistLogin />}>
+            {/* <Route element={<RequireAuth />}> */}
+            <Route path="/" element={<Home />} />
+            <Route path="boards" element={<BoardList />} />
+            {/* </Route> */}
+          </Route>
         </Route>
       </Routes>
     </>
