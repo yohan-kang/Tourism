@@ -1,6 +1,6 @@
-import axios from "../api/axios";
 import useAuth from "./useAuth";
 import jwt_decode from "jwt-decode"; // import dependency
+import myFetch from "../utils/myFetch";
 
 interface IToken {
   username: string;
@@ -8,7 +8,7 @@ interface IToken {
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
   const refresh = async () => {
-    const response = await axios.post(
+    const response = await myFetch.post(
       "/api/token/refresh/",
       JSON.stringify({ refresh: localStorage.getItem("refresh_token") }),
       {

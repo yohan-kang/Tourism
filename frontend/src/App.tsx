@@ -16,9 +16,9 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
-            <Route element={<RequireAuth />}>
-              <Route path="boards" element={<BoardList />} />
-            </Route>
+            {/* <Route element={<RequireAuth allowedRoles={[]} />}> */}
+            <Route path="boards" element={<BoardList />} />
+            {/* </Route> */}
           </Route>
         </Route>
       </Routes>

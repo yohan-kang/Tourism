@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState, useRef, useEffect } from "react";
-import axios from "../api/axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import myFetch from "../utils/myFetch";
 
 const LOGIN_URL = "/api/token/";
 
@@ -33,7 +33,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      const response = await myFetch.post(
         LOGIN_URL,
         JSON.stringify({ username, password }),
         {

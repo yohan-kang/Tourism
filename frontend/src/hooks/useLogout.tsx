@@ -1,16 +1,16 @@
 import React from "react";
+import IFetch from "../interfaces/IFetch";
 import useAuth from "./useAuth";
-import useAxiosPrivate from "./useAxiosPrivate";
+import useFetchPrivate from "./useFetchPrivate";
 
 function useLogout() {
   const { auth, setAuth } = useAuth();
-  const axiosPrivate = useAxiosPrivate();
+  const fetch: IFetch = useFetchPrivate();
   const logout = async () => {
     try {
-      await axiosPrivate.post(
+      await fetch.post(
         "/api/logout/",
         JSON.stringify({
-          // access: auth.accessToken,
           refresh: auth.refreshToken,
         }),
         {

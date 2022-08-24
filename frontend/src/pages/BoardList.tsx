@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useLocation, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import IFetch from "../interfaces/IFetch";
+import useFetchPrivate from "../hooks/useFetchPrivate";
 
 interface IBoard {
   boards: {
@@ -11,7 +11,7 @@ interface IBoard {
 
 function BoardList() {
   const [boards, setBoards] = useState<IBoard["boards"]>([]);
-  const axiosPrivate = useAxiosPrivate();
+  const fetch: IFetch = useFetchPrivate();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,7 +21,7 @@ function BoardList() {
 
     const getBoards = async () => {
       try {
-        const response = await axiosPrivate.get("/boards/writer2/", {});
+        const response = await fetch.get("/boards/writer2/");
         isMounted && setBoards(response.data);
       } catch (error) {
         console.error(error);
