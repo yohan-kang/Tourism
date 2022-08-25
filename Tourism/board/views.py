@@ -22,7 +22,7 @@ from rest_framework import generics,permissions,authentication
 # from Tourism.board import serializers
 
 # custom permissions
-from .permissions import IsStaffEditorPermission
+from .permissions import IsManagerPermission, IsStaffEditorPermission, IsTechnicianPermission
 # custom mixins
 from .mixins import StaffEditorPermissionMixin
 
@@ -46,23 +46,12 @@ class BoardWriterList(generics.ListCreateAPIView):
     user = self.request.user
     return Board.objects.filter(writer=user)
   
-  # how to use perform_create : 
-  #def perform_create(self, serializer):
-    ## serializer.save(writer=self.request.user)
-    # print(serializer.validated_data)
-    # title = serializer.validated_data.get('title')
-    # content= serializer.validated_data.get('content') or None
-    # if content is None:
-    #     content = title
-    # serializer.save(content= content)
+
 
 class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticated]
   serializer_class = BoardSerializer
-  # def get_queryset(self):
-  #   user = self.request.user
-  #   print(self.request.path_info)
-  #   return Board.objects.filter(writer=user)
+
 
 
 # class BoardListCreateAPIViewt(StaffEditorPermissionMixin,generics.ListCreateAPIView):  if use this don.t need permission_classes
@@ -76,18 +65,18 @@ class BoardListCreateAPIViewt(generics.ListCreateAPIView):
   # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
   #eyelike v2 web, we need to think about what we need this for
-  permission_classes = [permissions.DjangoModelPermissions] # user private Permissions check
-  # permission_classes = [IsStaffEditorPermission]    # staff check
+  # permission_classes = [permissions.DjangoModelPermissions] # user private Permissions check
+  permission_classes = [IsTechnicianPermission]    # staff check
 
 
 class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
-  permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated,IsTechnicianPermission]
   queryset = Board.objects.all()
   serializer_class = BoardSerializer
   # lookup_field = 'username'
 
 class BoardList2(generics.ListCreateAPIView):
-  permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated,IsManagerPermission]
   serializer_class = BoardSerializer
   def get_queryset(self):
     user = self.request.user
@@ -96,97 +85,3 @@ class BoardList2(generics.ListCreateAPIView):
   def perform_create(self, serializer):
     serializer.save(writer=self.request.user)
 
-
-
-
-
-
-
-
-
-
-
-
-
-# # ---- use api_view case----
-
-# def viewjson(request):
-#     return JsonResponse("API base point...", safe=False)
-# @api_view(['GET'])
-# # @authentication_classes()
-# # @permission_classes([IsAuthenticated])
-# def index(request):
-#     api_urls = {
-#         'List': '/boardList/',
-#         'Detail': '/boardView/<str:pk>/',
-#         'Create': '/boardInsert/',
-#         # 'Update': '/boardUpdate/<str:pk>/',
-#         'Delete': '/boardDelete/<str:pk>/',
-#     }
-#     boards = Board.objects.all().order_by('id')
-
-#     serializer = BoardSerializer(boards, many=True)
-
-#     return Response(api_urls)
-
-
-# @api_view(['GET'])
-# # @permission_classes([IsAuthenticated])
-# def boardList(request):
-
-#     data = Board.objects.all().order_by('id')
-#     serializer = BoardSerializer(data, many=True)
-#     return Response(serializer.data)
-
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def userboardList(request):
-#     if request.user.is_superuser : 
-#       data = Board.objects.all().order_by('id')
-#     else :
-#       data = Board.objects.all().filter(accessUser=request.user).all()
-#     serializer = BoardSerializer(data, many=True)
-#     return Response(serializer.data)
-
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def boardInsert(request, *args, **kwargs):
-#     serializer = BoardSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save(accessUser=request.user)
-#         return Response(serializer.data, status=201)
-#     return Response(serializer.errors, status=404)
-
-# @api_view(['GET' ,'PUT','DELETE'])
-# def boardView(request, pk):
-
-#     try:
-#         obj_data = Board.objects.get(pk=pk)
-#     except obj_data.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-    
-#     # Detail part
-#     if request.method == 'GET':
-#       serializer = BoardSerializer(obj_data)
-#       return Response(serializer.data)
-
-#     # Update part
-#     elif request.method == 'PUT':
-#         serializer = BoardSerializer(obj_data, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     # Delete 
-#     elif request.method == 'DELETE':
-#         obj_data.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
-# @api_view(['DELETE'])
-# def boardDelete(request, pk):
-#     board = Board.objects.get(id=pk)
-#     if board:
-#         board.delete()
-
-#     return Response("Deleted...")
