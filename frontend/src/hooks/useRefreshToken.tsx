@@ -1,10 +1,8 @@
 import useAuth from "./useAuth";
 import jwt_decode from "jwt-decode"; // import dependency
 import myFetch from "../utils/myFetch";
+import IToken from "../interfaces/IToken";
 
-interface IToken {
-  username: string;
-}
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
   const refresh = async () => {

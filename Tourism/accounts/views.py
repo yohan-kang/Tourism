@@ -22,6 +22,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
+
+        user_permissions = user.get_all_permissions()
+        token['permissions'] =  list(user_permissions)
         # ...
 
         return token

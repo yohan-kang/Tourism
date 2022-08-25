@@ -8,7 +8,7 @@ import PersistLogin from "./components/PersistLogin";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import BoardDetail from "./pages/BoardDetail";
-
+import { PERMISSIONS } from "./utils/permissions";
 function App() {
   return (
     <>
@@ -17,10 +17,12 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
-            {/* <Route element={<RequireAuth allowedRoles={[]} />}> */}
-            <Route path="boards" element={<BoardList />} />
-            <Route path="boards/:id" element={<BoardDetail />} />
-            {/* </Route> */}
+            <Route
+              element={<RequireAuth allowedRoles={[PERMISSIONS.Board_view]} />}
+            >
+              <Route path="boards" element={<BoardList />} />
+              <Route path="boards/:id" element={<BoardDetail />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
