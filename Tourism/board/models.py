@@ -23,7 +23,7 @@ class Board(models.Model):
 class ReviewImg(models.Model):
     user_id = models.ForeignKey(User, null=True,blank=True, on_delete=models.SET_NULL)
     image_name = models.CharField(null=True,max_length=200)
-    image_url = models.ImageField(upload_to='board/UploadImage',blank=True, null=True)
+    image_url = models.ImageField(upload_to='/board/UploadImage',blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now())
     updated_at = models.DateTimeField(auto_now=True)
     

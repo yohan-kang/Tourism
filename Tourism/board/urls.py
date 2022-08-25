@@ -1,6 +1,7 @@
 # from django.conf.urls import url, include
 from django.urls import path, include
-
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -24,4 +25,4 @@ urlpatterns = [
     # path('boardinsert/', views.boardInsert, name="boardInsert"),
     # # path('boardupdate/<str:pk>/', views.boardUpdate, name="boardupdate"),
     # path('boarddelete/<str:pk>/', views.boardDelete, name="boardDelete"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
