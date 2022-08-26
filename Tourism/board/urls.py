@@ -11,9 +11,9 @@ urlpatterns = [
   path('writer/',views.BoardWriterList.as_view()),
   path('writer2/',views.BoardList2.as_view()),
   path('writer/<int:pk>/',views.BoardDetail.as_view()),
-  path('writer2/<int:pk>/',views.BoardDetail2.as_view())
+  path('writer2/<int:pk>/',views.BoardDetail2.as_view()),
 
-
+  path('img/',views.BoardAllListAndImg.as_view()),
 
     # -- use api_view case --
 

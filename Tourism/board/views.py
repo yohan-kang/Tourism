@@ -7,7 +7,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.authentication import TokenAuthentication
 from .models import Board
-from .serializers import BoardSerializer
+from .models import ReviewImg
+from .serializers import BoardSerializer,ImgSerializer
 from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticated
 
@@ -85,3 +86,13 @@ class BoardList2(generics.ListCreateAPIView):
   def perform_create(self, serializer):
     serializer.save(writer=self.request.user)
 
+
+
+class BoardAllListAndImg(generics.ListAPIView):
+  # queryset = ReviewImg.objects.select_related('board').filter(user_id=2)
+  queryset = Board.objects.all().select_related('ReviewImg').filter(id=2)
+
+
+  # queryset = ReviewImg.objects.all()
+  serializer_class = ImgSerializer
+  # serializer_class = ImgSerializer
