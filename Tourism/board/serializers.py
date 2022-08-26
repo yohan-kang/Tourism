@@ -12,7 +12,12 @@ class ImgSerializer(serializers.ModelSerializer):
 class BoardSerializer(serializers.ModelSerializer):
 
     # reviewimgs = ImgSerializer(many=True, read_only=True)
-    # img_list = serializers.SerializerMethodField('_get_imgs')
+    img_list = serializers.SerializerMethodField('_get_imgs')
+
+    def _get_imgs(self, obj):
+
+      serializer = ImgSerializer(obj.reviewimg_set.all(),many=True)
+      return serializer.data
 
     def to_representation(self, instance):
       res = super().to_representation(instance)
@@ -21,8 +26,8 @@ class BoardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Board
-        fields = ['id','title','writer','content','created_at','updated_at','reviewimg_set']
-        read_only_fields = ['writer','created_at','updated_at','reviewimg_set']
+        fields = ['id','title','writer','content','created_at','updated_at','img_list']
+        read_only_fields = ['writer','created_at','updated_at','img_list']
         # lookup_field = 'writer'
         # read_only_fields = ['created_at']
         # fields = "__all__"
