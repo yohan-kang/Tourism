@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
@@ -8,10 +8,15 @@ export default function Header() {
   const logout = useLogout();
   const { auth } = useAuth();
   const [username, setUsername] = useState("");
+  const navbarLinksRef: any = useRef(null);
 
   const signOut = async () => {
     await logout();
     navigate("/login");
+  };
+
+  const toggleHandle = () => {
+    navbarLinksRef.current.classList.toggle("active");
   };
 
   useEffect(() => {
@@ -19,21 +24,32 @@ export default function Header() {
   }, []);
   return (
     <>
-      <div>
-        <span>
+      <nav className="navbar">
+        <div className="tourism-title">Tourism</div>
+        <div className="username">
           {auth?.username ? `Hello ${auth.username}` : `You are not logged in`}
-        </span>
-        <span> | </span>
-        <Link to="/">Home</Link>
-        <span> | </span>
-        <Link to="/boards">BoardList</Link>
-        <span> | </span>
-        {auth?.username ? (
-          <button onClick={signOut}>Sign Out</button>
-        ) : (
-          <Link to="/login">Login</Link>
-        )}
-      </div>
+        </div>
+        <button className="toggle-button" onClick={toggleHandle}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </button>
+        <div className="navbar-links" ref={navbarLinksRef}>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/boards">BoardList</Link>
+            </li>
+            <li>
+              <button onClick={signOut} className="signout-button">
+                Sign Out
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </>
   );
 }

@@ -53,7 +53,7 @@ function Login() {
       } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
+        setErrMsg("Invalid Username or Password");
       } else {
         setErrMsg("Login Failed");
       }
@@ -63,42 +63,44 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Sign In</h1>
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
-      <form onSubmit={submit}>
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          ref={usernameRef}
-          value={username}
-          autoComplete="off"
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter Username"
-          required
-        />
-        <br />
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter Password"
-          required
-        />
-        <br />
-        <input type="submit" value="Login" />
-      </form>
+    <div className="login-full-screen-container">
+      <div className="login-container">
+        <h1 className="login-title">Sign In</h1>
+        <p ref={errRef} className="login-errmsg">
+          {errMsg}
+        </p>
+        <form onSubmit={submit} className="login-form">
+          <div className="login-input-group">
+            <label htmlFor="username">Username: </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              ref={usernameRef}
+              value={username}
+              autoComplete="off"
+              onChange={(e) => setUsername(e.target.value)}
+              // placeholder="Enter Username"
+              // required
+            />
+          </div>
+          <div className="login-input-group">
+            <label htmlFor="password">Password: </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              // placeholder="Enter Password"
+              // required
+            />
+          </div>
+          <button type="submit" className="login-button">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
