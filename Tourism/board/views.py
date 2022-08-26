@@ -22,7 +22,7 @@ from rest_framework import generics,permissions,authentication
 # from Tourism.board import serializers
 
 # custom permissions
-from .permissions import IsManagerPermission, IsStaffEditorPermission, IsTechnicianPermission
+from .permissions import IsStaffEditorPermission, IsTechnicianPermission
 # custom mixins
 from .mixins import StaffEditorPermissionMixin
 
@@ -76,7 +76,7 @@ class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
   # lookup_field = 'username'
 
 class BoardList2(generics.ListCreateAPIView):
-  permission_classes = [IsAuthenticated,IsManagerPermission]
+  permission_classes = [IsAuthenticated]
   serializer_class = BoardSerializer
   def get_queryset(self):
     user = self.request.user
