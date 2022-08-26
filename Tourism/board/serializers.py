@@ -4,14 +4,15 @@ from django.db import models
 
 from django.conf import settings
 
+class ImgSerializer(serializers.ModelSerializer):
+      class Meta:
+        model=ReviewImg
+        fields = ['image_name','image_url']
+
 class BoardSerializer(serializers.ModelSerializer):
 
-    # def get_something(self, obj):
-    #   if not hasattr(obj, 'id'):
-    #     return None
-    #   if not isinstance(obj,'id'):
-    #     return None
-    #   return obj.get_somethingfield()
+    # reviewimgs = ImgSerializer(many=True, read_only=True)
+    # img_list = serializers.SerializerMethodField('_get_imgs')
 
     def to_representation(self, instance):
       res = super().to_representation(instance)
@@ -20,13 +21,9 @@ class BoardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Board
-        fields = ['id','title','writer','content','created_at','updated_at']
-        read_only_fields = ['writer','created_at','updated_at']
+        fields = ['id','title','writer','content','created_at','updated_at','reviewimg_set']
+        read_only_fields = ['writer','created_at','updated_at','reviewimg_set']
         # lookup_field = 'writer'
         # read_only_fields = ['created_at']
         # fields = "__all__"
 
-class ImgSerializer(serializers.ModelSerializer):
-      class Meta:
-        model=ReviewImg
-        fields = ['user_id','image_name','image_url']

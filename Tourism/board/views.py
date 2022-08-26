@@ -26,7 +26,9 @@ from rest_framework import generics,permissions,authentication
 from .permissions import IsStaffEditorPermission, IsTechnicianPermission
 # custom mixins
 from .mixins import StaffEditorPermissionMixin
+from django.conf import settings
 
+User = settings.AUTH_USER_MODEL
 
 # class somethingAPIView(generics.RetrieveAPIView):
 #     queryset = Board.objects.all()
@@ -71,7 +73,7 @@ class BoardListCreateAPIViewt(generics.ListCreateAPIView):
 
 
 class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
-  permission_classes = [IsAuthenticated,IsTechnicianPermission]
+  permission_classes = [IsAuthenticated]
   queryset = Board.objects.all()
   serializer_class = BoardSerializer
   # lookup_field = 'username'
@@ -90,9 +92,12 @@ class BoardList2(generics.ListCreateAPIView):
 
 class BoardAllListAndImg(generics.ListAPIView):
   # queryset = ReviewImg.objects.select_related('board').filter(user_id=2)
-  queryset = Board.objects.all().select_related('ReviewImg').filter(id=2)
+  # queryset = ReviewImg.objects.all().select_related('Board').filter(user_id=User.get(pk=1))
+  def get_queryset(self):
+    user = self.request.user
+    return Board.objects.select_related('ReviewImg').filter(user_id=user)
 
 
   # queryset = ReviewImg.objects.all()
-  serializer_class = ImgSerializer
+  serializer_class = BoardSerializer
   # serializer_class = ImgSerializer
