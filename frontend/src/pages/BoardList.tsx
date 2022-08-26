@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import IFetch from "../interfaces/IFetch";
 import useFetchPrivate from "../hooks/useFetchPrivate";
-import IBoards from "../interfaces/IBoard";
+import IBoards, { boardColumns, IBoard } from "../interfaces/IBoard";
 
 function BoardList() {
   const [boards, setBoards] = useState<IBoards["boards"]>([]);
@@ -33,26 +33,38 @@ function BoardList() {
 
   return (
     <>
-      <div>
-        <h1>BoardList</h1>
-        <article>
+      <div className="container">
+        <h1 className="boardlist-title">BoardList</h1>
+        <table className="boardlist-table">
+          {boardColumns?.length ? (
+            <thead>
+              <tr>
+                {boardColumns.map((column, id) => {
+                  return <th key={id}>{column}</th>;
+                })}
+              </tr>
+            </thead>
+          ) : null}
           {boards?.length ? (
-            <ul>
-              {boards.map((board, i) => {
+            <tbody>
+              {boards.map((board: any, id) => {
                 return (
-                  <li key={i}>
-                    <Link to={`/boards/${board.id}`}>
-                      {board?.title} - {board?.writer}
-                    </Link>
-                  </li>
+                  <tr
+                    key={board.id}
+                    onClick={() => {
+                      navigate(`/boards/${board.id}`);
+                    }}
+                  >
+                    {/* <Link to={`/boards/${row.id}`}> */}
+                    {boardColumns.map((column: string, id) => {
+                      return <td key={id}>{board[column]}</td>;
+                    })}
+                  </tr>
                 );
               })}
-            </ul>
-          ) : (
-            <p>No boards to display</p>
-          )}
-          <br />
-        </article>
+            </tbody>
+          ) : null}
+        </table>
       </div>
     </>
   );

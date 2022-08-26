@@ -8,3 +8,5 @@ export interface IBoard {
   writer: string;
   content: string;
 }
+
+export const boardColumns = ["title", "writer"];
