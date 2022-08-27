@@ -48,29 +48,23 @@ class BoardWriterList(generics.ListCreateAPIView):
   def get_queryset(self):
     user = self.request.user
     return Board.objects.filter(writer=user)
+  def perform_create(self, serializer):
+    serializer.save(writer=self.request.user)
   
 
 
 class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticated]
   serializer_class = BoardSerializer
+  def get_queryset(self):
+    user = self.request.user
+    return Board.objects.filter(writer=user)
+  # If no data meets the criteria, you must return to the board list.
 
-
-
-# class BoardListCreateAPIViewt(StaffEditorPermissionMixin,generics.ListCreateAPIView):  if use this don.t need permission_classes
-class BoardListCreateAPIViewt(generics.ListCreateAPIView):
+class BoardListCreateAPIViewt(generics.CreateAPIView):
   queryset = Board.objects.all()
   serializer_class = BoardSerializer
-
-  # I don't know it's necessary or not.
-  # authentication_classes = [authentication.SessionAuthentication]
-  # authentication_classes = [authentication.TokenAuthentication]
-  # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-  #eyelike v2 web, we need to think about what we need this for
-  # permission_classes = [permissions.DjangoModelPermissions] # user private Permissions check
-  permission_classes = [IsTechnicianPermission]    # staff check
-
+  # permission_classes = [IsTechnicianPermission]    # staff check
 
 class BoardDetail2(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticated]
@@ -91,13 +85,4 @@ class BoardList2(generics.ListCreateAPIView):
 
 
 class BoardAllListAndImg(generics.ListAPIView):
-  # queryset = ReviewImg.objects.select_related('board').filter(user_id=2)
-  # queryset = ReviewImg.objects.all().select_related('Board').filter(user_id=User.get(pk=1))
-  def get_queryset(self):
-    user = self.request.user
-    return Board.objects.select_related('ReviewImg').filter(user_id=user)
-
-
-  # queryset = ReviewImg.objects.all()
   serializer_class = BoardSerializer
-  # serializer_class = ImgSerializer

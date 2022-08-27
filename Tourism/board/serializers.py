@@ -12,7 +12,7 @@ class ImgSerializer(serializers.ModelSerializer):
 class BoardSerializer(serializers.ModelSerializer):
 
     # reviewimgs = ImgSerializer(many=True, read_only=True)
-    img_list = serializers.SerializerMethodField('_get_imgs')
+    img_list = serializers.SerializerMethodField(method_name='_get_imgs')
 
     def _get_imgs(self, obj):
 

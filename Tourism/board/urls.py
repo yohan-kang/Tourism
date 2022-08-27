@@ -7,13 +7,12 @@ from . import views
 urlpatterns = [
   # -- use APIView case --
   path('',views.BoardAllList.as_view()),
-  path('ListApi/',views.BoardListCreateAPIViewt.as_view()),
-  path('writer/',views.BoardWriterList.as_view()),
+  path('add/',views.BoardListCreateAPIViewt.as_view()),
+  path('list/',views.BoardWriterList.as_view()), 
+  path('detail/<int:pk>/',views.BoardDetail.as_view()),
   path('writer2/',views.BoardList2.as_view()),
-  path('writer/<int:pk>/',views.BoardDetail.as_view()),
   path('writer2/<int:pk>/',views.BoardDetail2.as_view()),
-
-  path('img/',views.BoardAllListAndImg.as_view()),
+  # path('img/',views.BoardAllListAndImg.as_view()),
 
     # -- use api_view case --
 
