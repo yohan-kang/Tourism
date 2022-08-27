@@ -17,7 +17,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 # for img file show 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Tourism/board/UploadImage/')
-MEDIA_URL = 'Tourism/board/UploadImage/'
+MEDIA_URL = '/Tourism/board/UploadImage/'
 
 
 # Quick-start development settings - unsuitable for production
