@@ -6,10 +6,10 @@ from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticated
 
 # --APIView(generics),permission case import add--
-from rest_framework import generics,permissions
+from rest_framework import generics,permissions,authentication
 
 # custom permissions
-# from .permissions import IsStaffEditorPermission, IsTechnicianPermission
+from .permissions import IsReviewerEditorPermission
 
 
 # unused
@@ -27,7 +27,9 @@ User = settings.AUTH_USER_MODEL
 #     serializer_class = BoardSerializer
 # board_view = somethingAPIView.as_view()
 
-class BoardAllList(generics.ListAPIView):
+class BoardAllList(generics.ListCreateAPIView):
+  # authentication_classes = [authentication.SessionAuthentication]
+  permission_classes = [IsReviewerEditorPermission]
   queryset = Board.objects.all()
   serializer_class = BoardSerializer
 

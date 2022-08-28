@@ -12,6 +12,7 @@ class IsStaffEditorPermission(permissions.DjangoModelPermissions):
     }
     # def has_permission(self, request, view, obj):
     #   # user = request.user
+    # print(user.get_all_permissions())
     #   if not request.user.is_staff:
     #     return False
     #   # if user.has_perm("board.view_board"):
@@ -40,3 +41,27 @@ class IsTechnicianPermission(permissions.DjangoModelPermissions):
         return False
 
       return super().has_permission(request, view)
+
+
+class IsReviewerEditorPermission(permissions.DjangoModelPermissions):
+
+    def has_permission(self, request, view):
+      user = request.user
+      # print("===========user.groups.all()==========")
+      # print(user.groups.all())
+      # print("===========request.user==========")
+      # print(request.user)
+      # print("===========user.get_all_permissions()==========")
+      # print(user.get_all_permissions())
+
+      userGroup = user.groups.all()
+      print("-----------userGroup--------")
+      print(userGroup.values('name'))
+      if user.is_staff:
+        return True
+      # ↓ This part is not being applied
+      if user.has_perm("board.view_board"):
+        print("why??")
+        return False
+
+    #   return super().has_permission(request, view)()
