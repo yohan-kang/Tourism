@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       {auth?.username ? (
-        <div>
+        <div className="main-container">
           <h1>Home</h1>
         </div>
       ) : (

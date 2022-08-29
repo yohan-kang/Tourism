@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import IFetch from "../interfaces/IFetch";
 import useFetchPrivate from "../hooks/useFetchPrivate";
-import IBoards, { boardColumns, IBoard } from "../interfaces/IBoard";
+import IBoards from "../interfaces/IBoard";
 
 function BoardList() {
   const [boards, setBoards] = useState<IBoards["boards"]>([]);
   const fetchPrivate: IFetch = useFetchPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+  const boardColumns = ["title", "created_at", "updated_at"];
 
   useEffect(() => {
     let isMounted = true;
@@ -33,24 +34,22 @@ function BoardList() {
   return (
     <>
       <div className="main-container">
-        <div className="content-container">
+        <div className="container large-container">
           <h1 className="boardlist-title">BoardList</h1>
           <div className="boardlist-toolbar">
-            <button className="filter-boardlist-button">Filter</button>
+            <button className="button">Filter</button>
             <Link to="newBoard">
-              <button className="add-board-button">Add Board</button>
+              <button className="button">Add Board</button>
             </Link>
           </div>
           <table className="boardlist-table">
-            {boardColumns?.length ? (
-              <thead>
-                <tr>
-                  {boardColumns.map((column, id) => {
-                    return <th key={id}>{column}</th>;
-                  })}
-                </tr>
-              </thead>
-            ) : null}
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+              </tr>
+            </thead>
             {boards?.length ? (
               <tbody>
                 {boards.map((board: any, id) => {
@@ -61,10 +60,9 @@ function BoardList() {
                         navigate(`/boards/${board.id}`);
                       }}
                     >
-                      {/* <Link to={`/boards/${row.id}`}> */}
-                      {boardColumns.map((column: string, id) => {
-                        return <td key={id}>{board[column]}</td>;
-                      })}
+                      <td>{board.title}</td>
+                      <td>{board.created_at}</td>
+                      <td>{board.updated_at}</td>
                     </tr>
                   );
                 })}

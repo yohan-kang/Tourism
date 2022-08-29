@@ -60,7 +60,7 @@ function BoardDetail() {
   return (
     <>
       <div className="main-container">
-        <div className="content-container">
+        <div className="container small-container">
           <h1 className="board-detail-title">Board Detail</h1>
           <form onSubmit={submit} className="board-form">
             <div className="board-input-group">
@@ -74,6 +74,7 @@ function BoardDetail() {
                     return { ...prev, title: e?.target?.value };
                   })
                 }
+                required
               />
             </div>
             <div className="board-input-group">
@@ -87,6 +88,7 @@ function BoardDetail() {
                     return { ...prev, content: e?.target?.value };
                   })
                 }
+                required
               />
             </div>
             <div className="board-input-group">
@@ -117,7 +119,7 @@ function BoardDetail() {
                 disabled
               />
             </div>
-            <button type="submit" className="submit-button update-board-button">
+            <button type="submit" className="button">
               Update
             </button>
           </form>

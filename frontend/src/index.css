@@ -33,7 +33,20 @@ main {
 }
 
 .button {
-  background-color: hsl(var(--primary-grey-hsl), 0.4);
+  padding: 0.5em 1em;
+  font-size: 1.125em;
+  font-weight: lighter;
+  color: white;
+  background-color: hsl(var(--primary-dark-blue-hsl), 0.4);
+  border: 1px solid hsl(var(--primary-dark-blue-hsl));
+  border-radius: 0.25em;
+  outline: none;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: hsl(var(--primary-blue-hsl), 0.4);
 }
 
 .main-container {
@@ -44,17 +57,29 @@ main {
   width: 100%;
 }
 
-.content-container {
+.container {
   display: flex;
   flex-direction: column;
   width: 80%;
-  max-width: 600px;
   padding: 10px;
   --color: hsl(var(--primary-dark-blue-hsl), 0.7);
   box-shadow: 0 0 15px 0 var(--color);
   background-color: hsl(var(--primary-light-grey-hsl), 0.5);
   margin-top: 20px;
   border-radius: 0.25em;
+}
+
+.large-container {
+  max-width: 1000px;
+}
+
+.small-container {
+  max-width: 600px;
+}
+
+.title {
+  font-size: 2em;
+  text-align: center;
 }
 
 /* Header */
@@ -105,7 +130,6 @@ main {
 
 .navbar-links li:hover {
   list-style: none;
-  /* background-color: #555; */
   background-color: hsl(var(--primary-grey-hsl), 0.5);
 }
 
@@ -263,32 +287,10 @@ main {
 
 /* BoardList */
 
-.boardlist-title {
-  font-size: 2em;
-  text-align: center;
-}
-
 .boardlist-toolbar {
   width: 100%;
   display: flex;
   justify-content: space-between;
-}
-
-.boardlist-toolbar button {
-  padding: 0.5em 1em;
-  font-size: 1.125em;
-  font-weight: lighter;
-  color: white;
-  background-color: hsl(var(--primary-dark-blue-hsl), 0.4);
-  border: 1px solid hsl(var(--primary-dark-blue-hsl));
-  border-radius: 0.25em;
-  outline: none;
-  cursor: pointer;
-}
-
-.boardlist-toolbar button:hover,
-.boardlist-toolbar button:focus {
-  background-color: hsl(var(--primary-blue-hsl), 0.99);
 }
 
 .boardlist-table {
@@ -364,21 +366,4 @@ main {
 .board-input-group input:focus,
 .board-input-group textarea:focus {
   box-shadow: 0 0 2px 1px hsl(var(--primary-blue-hsl));
-}
-
-.submit-button {
-  padding: 0.5em 1em;
-  font-size: 1.125em;
-  font-weight: lighter;
-  color: white;
-  background-color: hsl(var(--primary-dark-blue-hsl), 0.4);
-  border: 1px solid hsl(var(--primary-dark-blue-hsl));
-  border-radius: 0.25em;
-  outline: none;
-  cursor: pointer;
-}
-
-.submit-button:hover,
-.submit-button:focus {
-  background-color: hsl(var(--primary-blue-hsl), 0.4);
 }

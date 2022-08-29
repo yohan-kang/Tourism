@@ -56,7 +56,7 @@ const CreateBoard = (props: Props) => {
 
   return (
     <div className="main-container">
-      <div className="content-container">
+      <div className="container small-container">
         <h1>Create board</h1>
         <p ref={errRef} className="board-errmsg">
           {errMsg}
@@ -82,7 +82,7 @@ const CreateBoard = (props: Props) => {
               required
             />
           </div>
-          <button type="submit" className="submit-button">
+          <button type="submit" className="button">
             Create
           </button>
         </form>
