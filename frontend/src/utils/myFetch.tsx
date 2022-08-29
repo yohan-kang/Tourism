@@ -14,6 +14,10 @@ export class Fetch implements IFetch {
   post(url: string, data: any, config?: any): any {
     return this.fetch.post(url, data, config);
   }
+
+  put(url: string, data: any, config?: any): any {
+    return this.fetch.put(url, data, config);
+  }
 }
 
 const myFetch: IFetch = new Fetch(axios);

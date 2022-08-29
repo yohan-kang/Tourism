@@ -13,5 +13,5 @@ export default hasPermission;
 
 export const PERMISSIONS = {
   Board_view: "board.view_board",
-  Board_create: "board.create_board",
+  Board_create: "board.add_board",
 };

@@ -9,6 +9,7 @@ import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import BoardDetail from "./pages/BoardDetail";
 import { PERMISSIONS } from "./utils/permissions";
+import CreateBoard from "./pages/CreateBoard";
 function App() {
   return (
     <>
@@ -21,6 +22,14 @@ function App() {
               element={<RequireAuth allowedRoles={[PERMISSIONS.Board_view]} />}
             >
               <Route path="boards" element={<BoardList />} />
+
+              <Route
+                element={
+                  <RequireAuth allowedRoles={[PERMISSIONS.Board_create]} />
+                }
+              >
+                <Route path="boards/newBoard" element={<CreateBoard />} />
+              </Route>
               <Route path="boards/:id" element={<BoardDetail />} />
             </Route>
           </Route>

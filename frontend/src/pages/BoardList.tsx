@@ -7,7 +7,6 @@ import IBoards, { boardColumns, IBoard } from "../interfaces/IBoard";
 function BoardList() {
   const [boards, setBoards] = useState<IBoards["boards"]>([]);
   const fetchPrivate: IFetch = useFetchPrivate();
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,38 +32,46 @@ function BoardList() {
 
   return (
     <>
-      <div className="container">
-        <h1 className="boardlist-title">BoardList</h1>
-        <table className="boardlist-table">
-          {boardColumns?.length ? (
-            <thead>
-              <tr>
-                {boardColumns.map((column, id) => {
-                  return <th key={id}>{column}</th>;
+      <div className="main-container">
+        <div className="content-container">
+          <h1 className="boardlist-title">BoardList</h1>
+          <div className="boardlist-toolbar">
+            <button className="filter-boardlist-button">Filter</button>
+            <Link to="newBoard">
+              <button className="add-board-button">Add Board</button>
+            </Link>
+          </div>
+          <table className="boardlist-table">
+            {boardColumns?.length ? (
+              <thead>
+                <tr>
+                  {boardColumns.map((column, id) => {
+                    return <th key={id}>{column}</th>;
+                  })}
+                </tr>
+              </thead>
+            ) : null}
+            {boards?.length ? (
+              <tbody>
+                {boards.map((board: any, id) => {
+                  return (
+                    <tr
+                      key={board.id}
+                      onClick={() => {
+                        navigate(`/boards/${board.id}`);
+                      }}
+                    >
+                      {/* <Link to={`/boards/${row.id}`}> */}
+                      {boardColumns.map((column: string, id) => {
+                        return <td key={id}>{board[column]}</td>;
+                      })}
+                    </tr>
+                  );
                 })}
-              </tr>
-            </thead>
-          ) : null}
-          {boards?.length ? (
-            <tbody>
-              {boards.map((board: any, id) => {
-                return (
-                  <tr
-                    key={board.id}
-                    onClick={() => {
-                      navigate(`/boards/${board.id}`);
-                    }}
-                  >
-                    {/* <Link to={`/boards/${row.id}`}> */}
-                    {boardColumns.map((column: string, id) => {
-                      return <td key={id}>{board[column]}</td>;
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          ) : null}
-        </table>
+              </tbody>
+            ) : null}
+          </table>
+        </div>
       </div>
     </>
   );

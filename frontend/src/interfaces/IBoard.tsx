@@ -7,6 +7,8 @@ export interface IBoard {
   title: string;
   writer: string;
   content: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const boardColumns = ["title", "writer"];
