@@ -330,20 +330,20 @@ main {
 
 /* Board form */
 
-.board-form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-top: 40px;
 }
 
-.board-input-group {
+.input-group {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
-.board-input-group textarea {
+.input-group textarea {
   resize: none;
   border: none;
   outline: none;
@@ -351,7 +351,7 @@ main {
   font-size: 1.25rem;
 }
 
-.board-input-group input {
+.input-group input {
   font-size: 1.25rem;
   padding: 0.5em;
   background-color: white;
@@ -362,13 +362,13 @@ main {
   font-weight: lighter;
 }
 
-.board-input-group input:disabled {
+.input-group input:disabled {
   color: white;
   background-color: hsl(var(--primary-dark-blue-hsl), 0.6);
   cursor: not-allowed;
 }
 
-.board-input-group input:focus,
-.board-input-group textarea:focus {
+.input-group input:focus,
+.input-group textarea:focus {
   box-shadow: 0 0 2px 1px hsl(var(--primary-blue-hsl));
 }

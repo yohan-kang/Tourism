@@ -9,7 +9,6 @@ function BoardList() {
   const fetchPrivate: IFetch = useFetchPrivate();
   const navigate = useNavigate();
   const location = useLocation();
-  const boardColumns = ["title", "created_at", "updated_at"];
 
   useEffect(() => {
     let isMounted = true;

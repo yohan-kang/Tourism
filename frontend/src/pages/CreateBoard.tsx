@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useFetchPrivate from "../hooks/useFetchPrivate";
 import IFetch from "../interfaces/IFetch";
+import Form, { InputType } from "../components/Form";
 type Props = {};
 
 const CreateBoard = (props: Props) => {
@@ -18,6 +19,33 @@ const CreateBoard = (props: Props) => {
   const location: any = useLocation();
   const from = location.state?.from?.pathname || "/boards";
 
+  const inputs: Array<InputType> = [
+    {
+      key: "title",
+      name: "title",
+      type: "text",
+      label: "Title",
+      config: {
+        required: true,
+        disabled: false,
+      },
+      value: title,
+      handleChange: setTitle,
+    },
+    {
+      key: "content",
+      name: "content",
+      type: "textarea",
+      label: "Content",
+      config: {
+        required: true,
+        disabled: false,
+        rows: 5,
+      },
+      value: content,
+      handleChange: setContent,
+    },
+  ];
   useEffect(() => {
     setErrMsg("");
   }, [title, content]);
@@ -34,8 +62,6 @@ const CreateBoard = (props: Props) => {
           withCredentials: true,
         }
       );
-      console.log("response");
-      console.log(response);
       setTitle("");
       setContent("");
       navigate(from, { replace: true });
@@ -62,31 +88,12 @@ const CreateBoard = (props: Props) => {
         <p ref={errRef} className="board-errmsg">
           {errMsg}
         </p>
-        <form onSubmit={submit} className="board-form">
-          <div className="board-input-group">
-            <label>Title</label>
-            <input
-              name="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-          <div className="board-input-group">
-            <label>Content</label>
-            <textarea
-              name="content"
-              rows={5}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="button">
-            Create
-          </button>
-        </form>
+        <Form
+          submit={submit}
+          inputs={inputs}
+          button="Create"
+          handleChange={null}
+        />
       </div>
     </div>
   );

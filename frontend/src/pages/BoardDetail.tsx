@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Form, { InputType } from "../components/Form";
 import useFetchPrivate from "../hooks/useFetchPrivate";
 import { IBoard, IImage } from "../interfaces/IBoard";
 
@@ -11,6 +12,72 @@ function BoardDetail() {
   const location: any = useLocation();
   const [errMsg, setErrMsg] = useState("");
   const from = location.state?.from?.pathname || "/boards";
+  const inputs: Array<InputType> = [
+    {
+      key: "title",
+      name: "title",
+      type: "text",
+      label: "Title",
+      config: {
+        required: true,
+        disabled: false,
+      },
+      value: board?.title || null,
+    },
+    {
+      key: "writer",
+      name: "writer",
+      type: "text",
+      label: "Writer",
+      config: {
+        required: false,
+        disabled: true,
+      },
+      value: board?.writer || null,
+    },
+    {
+      key: "content",
+      name: "content",
+      type: "textarea",
+      label: "Content",
+      config: {
+        required: true,
+        disabled: false,
+        rows: 5,
+      },
+      value: board?.content || null,
+    },
+    {
+      key: "created_at",
+      name: "created_at",
+      type: "datetime-local",
+      label: "Created at",
+      config: {
+        required: false,
+        disabled: true,
+      },
+      value:
+        board?.created_at?.substring(
+          0,
+          board?.created_at ? board?.created_at?.length - 9 : 1
+        ) || "",
+    },
+    {
+      key: "updated_at",
+      name: "updated_at",
+      type: "datetime-local",
+      label: "Updated at",
+      config: {
+        required: false,
+        disabled: true,
+      },
+      value:
+        board?.updated_at?.substring(
+          0,
+          board?.updated_at ? board?.updated_at?.length - 9 : 1
+        ) || "",
+    },
+  ];
   useEffect(() => {
     let isMounted = true;
     const getBoard = async () => {
@@ -22,6 +89,16 @@ function BoardDetail() {
       } catch (error) {
         navigate("/boards", { state: { from: location }, replace: true });
       }
+
+      // for (const i in board?.img_list) {
+      //   inputs.push({
+      //     key: `img_${i}`,
+      //     name: `${board?.img_list[0].image_name}`,
+      //     type: "img",
+      //     label: "Image",
+      //     src: `http://localhost:8000${board?.img_list[0].image_url || null}}`,
+      //   });
+      // }
     };
 
     getBoard();
@@ -39,8 +116,6 @@ function BoardDetail() {
           withCredentials: true,
         }
       );
-      console.log("response");
-      console.log(response);
       navigate(from, { replace: true });
     } catch (err: any) {
       if (!err?.response) {
@@ -63,7 +138,7 @@ function BoardDetail() {
         <div className="container small-container">
           <h1 className="board-detail-title">Board Detail</h1>
           <div>
-            {board?.img_list.map((img: IImage, id: number) => {
+            {/* {board?.img_list.map((img: IImage, id: number) => {
               return (
                 <div key={id}>
                   <img
@@ -74,69 +149,14 @@ function BoardDetail() {
                   />
                 </div>
               );
-            })}
+            })} */}
           </div>
-          <form onSubmit={submit} className="board-form">
-            <div className="board-input-group">
-              <label>Title</label>
-              <input
-                name="title"
-                type="text"
-                value={board?.title || ""}
-                onChange={(e) =>
-                  setBoard((prev: any) => {
-                    return { ...prev, title: e?.target?.value };
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="board-input-group">
-              <label>Content</label>
-              <textarea
-                rows={5}
-                name="content"
-                value={board?.content || ""}
-                onChange={(e) =>
-                  setBoard((prev: any) => {
-                    return { ...prev, content: e?.target?.value };
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="board-input-group">
-              <label>Created At</label>
-              <input
-                type="datetime-local"
-                name="created_at"
-                value={
-                  board?.created_at?.substring(
-                    0,
-                    board?.created_at ? board?.created_at?.length - 9 : 1
-                  ) || ""
-                }
-                disabled
-              />
-            </div>
-            <div className="board-input-group">
-              <label>Updated At</label>
-              <input
-                type="datetime-local"
-                name="updated_at"
-                value={
-                  board?.updated_at?.substring(
-                    0,
-                    board?.updated_at ? board?.updated_at?.length - 9 : 1
-                  ) || ""
-                }
-                disabled
-              />
-            </div>
-            <button type="submit" className="button">
-              Update
-            </button>
-          </form>
+          <Form
+            submit={submit}
+            handleChange={setBoard}
+            inputs={inputs || null}
+            button="Update"
+          />
         </div>
       </div>
     </>
