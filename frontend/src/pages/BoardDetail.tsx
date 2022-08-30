@@ -138,20 +138,7 @@ function BoardDetail() {
       <div className="main-container">
         <div className="container small-container">
           <h1 className="board-detail-title">Board Detail</h1>
-          <div>
-            {/* {board?.img_list.map((img: IImage, id: number) => {
-              return (
-                <div key={id}>
-                  <img
-                    src={`http://localhost:8000${img.image_url}`}
-                    alt={img.image_name}
-                    width="100"
-                    height="100"
-                  />
-                </div>
-              );
-            })} */}
-          </div>
+          <div></div>
           <Form
             submit={submit}
             handleChange={setBoard}
@@ -159,6 +146,22 @@ function BoardDetail() {
             data={board}
             button="Update"
           />
+        </div>
+        <div className="container large-container">
+          <div className="grid-container">
+            {board?.img_list.map((img: IImage, id: number) => {
+              return (
+                // <div>
+                <img
+                  key={id}
+                  className="grid-item"
+                  src={`http://localhost:8000${img.image_url}`}
+                  alt={img.image_name}
+                />
+                // </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>

@@ -10,6 +10,7 @@ body {
   background-size: cover;
   background-position: center;
   height: 100vh;
+  background-attachment: fixed;
 }
 
 :root {
@@ -34,6 +35,11 @@ main {
   display: flex;
   box-sizing: border-box;
   padding: 0;
+}
+
+img {
+  width: 100%;
+  /* size: cover; */
 }
 
 .button {
@@ -371,4 +377,17 @@ main {
 .input-group input:focus,
 .input-group textarea:focus {
   box-shadow: 0 0 2px 1px hsl(var(--primary-blue-hsl));
+}
+
+.grid-container {
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: auto auto;
+  grid-auto-flow: row;
+  gap: 7px;
+  justify-items: center;
+}
+.grid-item {
+  /* display: block;
+  width: 100%; */
 }
