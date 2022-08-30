@@ -60,7 +60,7 @@ class IsReviewerEditorPermission(permissions.DjangoModelPermissions):
       if user.is_staff:
         return True
       # ↓ This part is not being applied
-      if user.has_perm("board.view_board"):
+      if not user.has_permission("board.change_board"):
         print("why??")
         return False
 

@@ -16,7 +16,7 @@ function BoardList() {
 
     const getBoards = async () => {
       try {
-        const response = await fetchPrivate.get("/boards/writer2/");
+        const response = await fetchPrivate.get("/boards/");
         isMounted && setBoards(response.data);
       } catch (error) {
         console.error(error);

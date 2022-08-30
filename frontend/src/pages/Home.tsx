@@ -8,7 +8,9 @@ export default function Home() {
     <>
       {auth?.username ? (
         <div className="main-container">
-          <h1>Home</h1>
+          <div className="container small-container">
+            <h1 className="title">Home</h1>
+          </div>
         </div>
       ) : (
         <Navigate to="/login" />

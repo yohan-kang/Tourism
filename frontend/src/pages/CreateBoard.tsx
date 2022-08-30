@@ -27,7 +27,7 @@ const CreateBoard = (props: Props) => {
 
     try {
       const response = await fetchPrivate.post(
-        "/boards/writer2/",
+        "/boards/",
         JSON.stringify({ title, content }),
         {
           headers: { "Content-Type": "application/json" },
@@ -43,6 +43,7 @@ const CreateBoard = (props: Props) => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
+        console.log(err);
         setErrMsg("Missing Title or Content");
       } else if (err.response?.status === 401) {
         setErrMsg("Invalid Title or Content");

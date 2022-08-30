@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useFetchPrivate from "../hooks/useFetchPrivate";
-import { IBoard } from "../interfaces/IBoard";
+import { IBoard, IImage } from "../interfaces/IBoard";
 
 function BoardDetail() {
   const { id } = useParams();
@@ -15,7 +15,7 @@ function BoardDetail() {
     let isMounted = true;
     const getBoard = async () => {
       try {
-        const response = await fetchPrivate.get(`/boards/writer2/${id}/`);
+        const response = await fetchPrivate.get(`/boards/${id}/`);
         isMounted && setBoard(response.data);
         // setTitle(response.data.title);
         // setContent(response.data.content);
@@ -32,7 +32,7 @@ function BoardDetail() {
 
     try {
       const response = await fetchPrivate.put(
-        `/boards/writer2/${board?.id}/`,
+        `/boards/${board?.id}/`,
         JSON.stringify(board),
         {
           headers: { "Content-Type": "application/json" },
@@ -62,6 +62,20 @@ function BoardDetail() {
       <div className="main-container">
         <div className="container small-container">
           <h1 className="board-detail-title">Board Detail</h1>
+          <div>
+            {board?.img_list.map((img: IImage, id: number) => {
+              return (
+                <div key={id}>
+                  <img
+                    src={`http://localhost:8000${img.image_url}`}
+                    alt={img.image_name}
+                    width="100"
+                    height="100"
+                  />
+                </div>
+              );
+            })}
+          </div>
           <form onSubmit={submit} className="board-form">
             <div className="board-input-group">
               <label>Title</label>
