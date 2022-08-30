@@ -97,6 +97,7 @@ function BoardDetail() {
       //     type: "img",
       //     label: "Image",
       //     src: `http://localhost:8000${board?.img_list[0].image_url || null}}`,
+      //     value: null,
       //   });
       // }
     };
@@ -155,6 +156,7 @@ function BoardDetail() {
             submit={submit}
             handleChange={setBoard}
             inputs={inputs || null}
+            data={board}
             button="Update"
           />
         </div>

@@ -93,6 +93,7 @@ const CreateBoard = (props: Props) => {
           inputs={inputs}
           button="Create"
           handleChange={null}
+          data={{ title, content }}
         />
       </div>
     </div>

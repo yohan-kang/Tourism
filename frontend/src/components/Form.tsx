@@ -20,9 +20,10 @@ type Props = {
   handleChange: any;
   inputs: Array<InputType>;
   button: string;
+  data: any;
 };
 
-function Form({ submit, handleChange, inputs, button }: Props) {
+function Form({ submit, handleChange, inputs, button, data }: Props) {
   return (
     <form onSubmit={submit} className="form">
       {inputs.map((input: InputType) => {
@@ -32,7 +33,7 @@ function Form({ submit, handleChange, inputs, button }: Props) {
             {input.type === "textarea" ? (
               <textarea
                 name={input.name || ""}
-                value={input.value || ""}
+                value={data?.[input.name] || ""}
                 onChange={
                   input.handleChange
                     ? (e) => input.handleChange(e?.target?.value)
@@ -45,13 +46,18 @@ function Form({ submit, handleChange, inputs, button }: Props) {
                 }
                 {...(input.config ? input.config : null)}
               />
-            ) : input.type === "img" ? (
-              <img src={input.src} alt={input.name} />
             ) : (
               <input
                 type={input.type || ""}
                 name={input.name || ""}
-                value={input.value || ""}
+                value={
+                  input.type === "datetime-local"
+                    ? data?.[input.name]?.substring(
+                        0,
+                        data?.[input.name] ? data?.[input.name]?.length - 9 : 1
+                      ) || ""
+                    : data?.[input.name] || ""
+                }
                 onChange={
                   input.handleChange
                     ? (e) => input.handleChange(e?.target?.value)
