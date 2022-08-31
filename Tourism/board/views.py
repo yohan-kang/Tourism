@@ -73,6 +73,26 @@ class BoardList(generics.ListCreateAPIView):
     serializer.save(writer=self.request.user)
 
 
+class ImgDetail(generics.RetrieveUpdateDestroyAPIView):
+  # permission_classes = [IsAuthenticated]
+  # lookup_url_kwarg = 'pk_img'
+  queryset = ReviewImg.objects.all()
+  serializer_class = ImgSerializer
+  # lookup_field = 'username'
+
+class ImgList(generics.ListCreateAPIView):
+  # permission_classes = [IsAuthenticated]
+  serializer_class = ImgSerializer
+  # lookup_url_kwarg = 'pk_img'
+  # queryset = ReviewImg.objects.all()
+  def get_queryset(self):
+    board_id = self.kwargs['pk_board']
+    return ReviewImg.objects.filter(board_id=board_id)
+
+  def perform_create(self, serializer):
+    serializer.save(board_id=self.kwargs['pk_board'])
+
+
 
 class BoardAllListAndImg(generics.ListAPIView):
   serializer_class = BoardSerializer

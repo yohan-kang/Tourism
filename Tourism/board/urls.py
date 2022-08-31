@@ -12,6 +12,10 @@ urlpatterns = [
   # path('detail/<int:pk>/',views.BoardDetail.as_view()),
   path('',views.BoardList.as_view()),
   path('<int:pk>/',views.BoardDetail.as_view()),
+  # path('<int:pk>/imgs/',views.ImgList.as_view()),
+  # path('<int:pk>/imgs/<int:pk_img>/',views.ImgDetail.as_view()),
+  path('<int:pk_board>/imgs/',views.ImgList.as_view()),
+  path('<int:pk_board>/imgs/<int:pk>/',views.ImgDetail.as_view()),
   # path('img/',views.BoardAllListAndImg.as_view()),
 ] 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

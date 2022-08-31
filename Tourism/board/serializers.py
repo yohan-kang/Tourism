@@ -7,10 +7,11 @@ from django.conf import settings
 class ImgSerializer(serializers.ModelSerializer):
       class Meta:
         model=ReviewImg
-        fields = ['image_name','image_url']
+        fields = ['id','image_name','image_url']
+        # fields = '__all__'
 
 class BoardSerializer(serializers.ModelSerializer):
-
+    # img = ImgSerializer()
     # reviewimgs = ImgSerializer(many=True, read_only=True)
     img_list = serializers.SerializerMethodField(method_name='_get_imgs')
 
@@ -27,8 +28,7 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model=Board
         fields = ['id','title','writer','content','created_at','updated_at','img_list']
-        read_only_fields = ['writer','created_at','updated_at','img_list']
+        read_only_fields = ['writer','created_at','updated_at']
         # lookup_field = 'writer'
         # read_only_fields = ['created_at']
         # fields = "__all__"
-

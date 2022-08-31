@@ -39,7 +39,6 @@ main {
 
 img {
   width: 100%;
-  size: cover;
 }
 
 .button {
@@ -70,8 +69,6 @@ img {
 .container {
   display: flex;
   flex-direction: column;
-  width: 80%;
-
   padding: 10px;
   --color: hsl(var(--primary-dark-blue-hsl), 0.8);
   box-shadow: 0 0 15px 0 var(--color);
@@ -81,11 +78,11 @@ img {
 }
 
 .large-container {
-  max-width: 1000px;
+  width: min(80%, 1000px);
 }
 
 .small-container {
-  max-width: 600px;
+  width: min(80%, 600px);
 }
 
 .title {
@@ -230,8 +227,8 @@ img {
   background-color: hsl(var(--primary-dark-blue-hsl), 0.7);
   box-shadow: 0 0 15px 0 var(--color);
   padding: 40px 30px;
-  width: 80%;
-  max-width: 600px;
+  width: min(80%, 600px);
+  /* max-width: 600px; */
   border-radius: 20px;
 }
 
@@ -392,5 +389,4 @@ img {
 .grid-item {
   display: block;
   box-sizing: border-box;
-  width: 100%;
 }
