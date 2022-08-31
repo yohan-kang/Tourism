@@ -16,5 +16,3 @@ export interface IBoard {
   updated_at?: string;
   img_list: Array<IImage>;
 }
-
-export const boardColumns = ["title", "writer"];

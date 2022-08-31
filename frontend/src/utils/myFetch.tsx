@@ -1,7 +1,24 @@
-import IFetch from "../interfaces/IFetch";
 import axios from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-export class Fetch implements IFetch {
+interface IFetchGet {
+  (url: string, config?: any): any;
+}
+
+interface IFetchPost {
+  (url: string, data: any, config?: any): any;
+}
+interface IFetchPut {
+  (url: string, data: any, config?: any): any;
+}
+
+export interface IFetch {
+  get: IFetchGet;
+  post: IFetchPost;
+  put: IFetchPut;
+}
+
+class Fetch implements IFetch {
   fetch: IFetch;
   constructor(fetchApi: IFetch) {
     this.fetch = fetchApi;
@@ -23,3 +40,7 @@ export class Fetch implements IFetch {
 const myFetch: IFetch = new Fetch(axios);
 
 export default myFetch;
+
+export function useFetchPrivate(): IFetch {
+  return useAxiosPrivate();
+}

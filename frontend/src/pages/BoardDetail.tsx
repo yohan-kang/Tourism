@@ -1,8 +1,8 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Form, { InputType } from "../components/Form";
-import useFetchPrivate from "../hooks/useFetchPrivate";
 import { IBoard, IImage } from "../interfaces/IBoard";
+import { useFetchPrivate } from "../utils/myFetch";
 
 function BoardDetail() {
   const { id } = useParams();

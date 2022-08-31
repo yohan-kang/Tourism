@@ -1,9 +1,8 @@
 import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import useFetchPrivate from "../hooks/useFetchPrivate";
-import IFetch from "../interfaces/IFetch";
 import Form, { InputType } from "../components/Form";
+import { IFetch, useFetchPrivate } from "../utils/myFetch";
 type Props = {};
 
 const CreateBoard = (props: Props) => {

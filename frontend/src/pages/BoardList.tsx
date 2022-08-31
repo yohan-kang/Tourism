@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import IFetch from "../interfaces/IFetch";
-import useFetchPrivate from "../hooks/useFetchPrivate";
 import IBoards from "../interfaces/IBoard";
+import { IFetch, useFetchPrivate } from "../utils/myFetch";
 
 function BoardList() {
   const [boards, setBoards] = useState<IBoards["boards"]>([]);

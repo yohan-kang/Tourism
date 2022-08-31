@@ -1,7 +1,6 @@
 import React from "react";
-import IFetch from "../interfaces/IFetch";
+import { IFetch, useFetchPrivate } from "../utils/myFetch";
 import useAuth from "./useAuth";
-import useFetchPrivate from "./useFetchPrivate";
 
 function useLogout() {
   const { auth, setAuth } = useAuth();
