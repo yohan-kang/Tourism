@@ -7,6 +7,7 @@ User = settings.AUTH_USER_MODEL
 class Board(models.Model):
     title = models.CharField(max_length=255,null=True)
     writer = models.ForeignKey(User, null=True,blank=True, on_delete=models.SET_NULL)
+    location = models.ForeignKey("locations.Location", null=True,blank=True, on_delete=models.SET_NULL)
     content = models.TextField(null=True)
     created_at = models.DateTimeField(default=datetime.now())
     updated_at = models.DateTimeField(auto_now=True)
@@ -26,4 +27,4 @@ class ReviewImg(models.Model):
     image_url = models.ImageField(upload_to='',blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now())
     updated_at = models.DateTimeField(auto_now=True)
-    
+

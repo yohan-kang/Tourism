@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     #accounts app
     'accounts',
+    'locations',
     #django-rest-auth
     'rest_framework_simplejwt',
     'rest_framework.authtoken',

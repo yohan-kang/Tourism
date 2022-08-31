@@ -1,0 +1,65 @@
+[
+  {
+    "model": "",
+    "pk": 1,
+    "fields":{
+      "b_title": "board1"
+    }
+  },
+  {
+    "model": "",
+    "pk": 2,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 3,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 3,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 3,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 4,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 4,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 4,
+    "fields":{
+
+    }
+  },
+  {
+    "model": "",
+    "pk": 4,
+    "fields":{
+
+    }
+  }
+]
