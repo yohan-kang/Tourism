@@ -151,14 +151,12 @@ function BoardDetail() {
           <div className="grid-container">
             {board?.img_list.map((img: IImage, id: number) => {
               return (
-                // <div>
-                <img
-                  key={id}
-                  className="grid-item"
-                  src={`http://localhost:8000${img.image_url}`}
-                  alt={img.image_name}
-                />
-                // </div>
+                <div key={id} className="grid-item">
+                  <img
+                    src={`http://localhost:8000${img.image_url}`}
+                    alt={img.image_name}
+                  />
+                </div>
               );
             })}
           </div>

@@ -39,7 +39,7 @@ main {
 
 img {
   width: 100%;
-  /* size: cover; */
+  size: cover;
 }
 
 .button {
@@ -388,6 +388,7 @@ img {
   justify-items: center;
 }
 .grid-item {
-  /* display: block;
-  width: 100%; */
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
 }
