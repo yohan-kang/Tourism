@@ -12,6 +12,7 @@ urlpatterns = [
   # path('detail/<int:pk>/',views.BoardDetail.as_view()),
   path('',views.BoardList.as_view()),
   path('<int:pk>/',views.BoardDetail.as_view()),
+  path('add',views.BoardAdd.as_view()),
   # path('<int:pk>/imgs/',views.ImgList.as_view()),
   # path('<int:pk>/imgs/<int:pk_img>/',views.ImgDetail.as_view()),
   path('<int:pk_board>/imgs/',views.ImgList.as_view()),

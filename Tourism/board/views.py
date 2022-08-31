@@ -11,6 +11,7 @@ from rest_framework import generics,permissions,authentication
 # custom permissions
 from .permissions import IsReviewerEditorPermission
 
+from drf_multiple_model.views import ObjectMultipleModelAPIView
 
 # unused
 # from itertools import product
@@ -55,6 +56,24 @@ User = settings.AUTH_USER_MODEL
 #   queryset = Board.objects.all()
 #   serializer_class = BoardSerializer
 #   # permission_classes = [IsTechnicianPermission]    # staff check
+
+
+class BoardAdd(ObjectMultipleModelAPIView):
+  # permission_classes = [IsAuthenticated]
+  # serializer_class = BoardSerializer
+
+  querylist = [
+      {'queryset': Board.objects.all(), 'serializer_class': BoardSerializer},
+      {'queryset': ReviewImg.objects.all(), 'serializer_class': ImgSerializer},
+  ]
+  # def get_queryset(self):
+  #   user = self.request.user
+  #   return Board.objects.filter(writer=user)
+
+  # def perform_create(self, serializer):
+  #   serializer.save(writer=self.request.user)
+
+
 
 class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsAuthenticated]
