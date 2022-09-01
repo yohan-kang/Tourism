@@ -1,5 +1,4 @@
-import axios from "../api/axios";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import axios, { useAxiosPrivate } from "../api/axios";
 
 interface IFetchGet {
   (url: string, config?: any): any;
